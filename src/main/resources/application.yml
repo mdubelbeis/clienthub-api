@@ -1,11 +1,14 @@
 spring:
   datasource:
+    # Connect to Docker Database
     url: jdbc:postgresql://localhost:5432/clienthub
-    username: postgres
-    password: postgres
+    username: clienthub
+    password: clienthub
 
   jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
+      # Automatically createt tables from entities
       ddl-auto: update
     show-sql: true
     properties:
