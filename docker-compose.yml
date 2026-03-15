@@ -1,0 +1,16 @@
+services:
+
+  postgres:
+    image: postgres:16
+    container_name: clienthub-postgres
+    environment:
+      POSTGRES_DB: clienthub
+      POSTGRES_USER: clienthub
+      POSTGRES_PASSWORD: clienthub
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
