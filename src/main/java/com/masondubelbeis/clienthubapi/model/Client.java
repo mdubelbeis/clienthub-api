@@ -3,25 +3,34 @@ package com.masondubelbeis.clienthubapi.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.Setter;
+import lombok.Getter;
+
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Table(name = "clients")
+@Setter
+@Getter
 public class Client {
 
     @Id
     @GeneratedValue
+    @Column(name="id")
     private UUID id;
 
-    @Column(nullable = false)
+    @Column(name="name", nullable = false)
     private String name;
 
+    @Column(name="email", unique = true)
     private String email;
 
+    @Column(name="phone")
     private String phone;
 
+    @Column(name="created_at")
     private Instant createdAt = Instant.now();
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -31,48 +40,4 @@ public class Client {
 
     @OneToMany(mappedBy = "client")
     private List<Activity> activities;
-
-    public UUID getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public List<Activity> getActivities() {
-        return activities;
-    }
 }
