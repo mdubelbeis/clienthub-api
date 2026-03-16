@@ -4,6 +4,7 @@ import com.masondubelbeis.clienthubapi.dto.request.ClientRequest;
 import com.masondubelbeis.clienthubapi.dto.response.ClientResponse;
 import com.masondubelbeis.clienthubapi.model.Client;
 import com.masondubelbeis.clienthubapi.model.User;
+import com.masondubelbeis.clienthubapi.repository.UserRepository;
 import com.masondubelbeis.clienthubapi.service.ClientService;
 
 import jakarta.validation.Valid;
@@ -18,15 +19,19 @@ import java.util.UUID;
 public class ClientController {
 
     private final ClientService clientService;
+    private final UserRepository userRepository; // ISN'T revealing the repository in controller bad practice?
 
-    public ClientController(ClientService clientService) {
+    public ClientController(ClientService clientService, UserRepository userRepository) {
         this.clientService = clientService;
+        this.userRepository = userRepository;
     }
 
     @GetMapping
     public Page<ClientResponse> getClients(Pageable pageable) {
 
-        User user = new User(); // placeholder until auth exists
+        // BAD PRACTICE! ONLY TEMP
+        User user = userRepository.findAll().getFirst();
+
 
         return clientService.getClients(user, pageable)
                 .map(client -> new ClientResponse(
@@ -54,21 +59,7 @@ public class ClientController {
 
     @PostMapping
     public ClientResponse createClient(@Valid @RequestBody ClientRequest request) {
-
-        Client client = new Client();
-        client.setName(request.getName());
-        client.setEmail(request.getEmail());
-        client.setPhone(request.getPhone());
-
-        Client saved = clientService.createClient(client);
-
-        return new ClientResponse(
-                saved.getId(),
-                saved.getName(),
-                saved.getEmail(),
-                saved.getPhone(),
-                saved.getCreatedAt()
-        );
+        return clientService.createClient(request);
     }
 
     @DeleteMapping("/{id}")
