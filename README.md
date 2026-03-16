@@ -28,6 +28,47 @@ All rules are implemented inside transactional service boundaries.
 
 ---
 
+## Tech Stack
+- Java 21
+- Spring Boot
+- Spring Web MVC
+- Spring Data JPA
+- Spring Security
+- Hibernate
+- PostgreSQL
+- Docker
+- OpenAPI / Swagger
+- Lombok
+- JWT
+
+---
+
+## What This Project Demonstrates
+- Understanding of layered backend architecture
+- Relational domain modeling
+- Transactional service boundaries
+- Secure authentication with JWT
+- Multi-tenant ownership enforcement
+- Clean API contract design with DTO separation
+- Centralized error handling
+- Containerized development environments
+
+---
+
+## Why This Project Exists
+
+The goal of ClientHub is to demonstrate the design and implementation of a production-style backend system rather than a simple CRUD demo.
+
+The project emphasizes:
+- layered architecture
+- relational domain modeling
+- secure authentication
+- ownership enforcement
+- maintainable API design
+- reproducible local environments
+
+---
+
 # Architecture
 
 This application follows a layered backend architecture.
@@ -70,7 +111,7 @@ JWT authentication and request filtering using Spring Security.
 ---
 
 ## System Architecture Diagram
-
+```mermaid
 flowchart TD
 
 Client[API Client]
@@ -87,6 +128,7 @@ SecurityFilter --> Controller
 Controller --> Service
 Service --> Repository
 Repository --> Database
+```
 
 This illustrates the request flow through the application layers.
 
@@ -350,33 +392,6 @@ http://localhost:8080/swagger-ui.html
 
 ---
 
-## Tech Stack
-- Java 21
-- Spring Boot
-- Spring Web MVC
-- Spring Data JPA
-- Spring Security
-- Hibernate
-- PostgreSQL
-- Docker
-- OpenAPI / Swagger
-- Lombok
-- JWT
-
----
-
-## What This Project Demonstrates
-- Understanding of layered backend architecture
-- Relational domain modeling
-- Transactional service boundaries
-- Secure authentication with JWT
-- Multi-tenant ownership enforcement
-- Clean API contract design with DTO separation
-- Centralized error handling
-- Containerized development environments
-
----
-
 ## Design Decisions
 
 ### DTO Separation
@@ -441,20 +456,6 @@ Reasons:
 	•	Prevents large dataset responses
 	•	Allows efficient database querying
 	•	Supports scalable API consumption
-
----
-
-## Why This Project Exists
-
-The goal of ClientHub is to demonstrate the design and implementation of a production-style backend system rather than a simple CRUD demo.
-
-The project emphasizes:
-- layered architecture
-- relational domain modeling
-- secure authentication
-- ownership enforcement
-- maintainable API design
-- reproducible local environments
 
 ---
 
