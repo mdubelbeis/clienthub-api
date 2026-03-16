@@ -55,7 +55,7 @@ JWT authentication and request filtering using Spring Security.
 
 ---
 
-# Architectural Highlights
+## Architectural Highlights
 
 - JWT authentication with stateless security
 - Service-level transaction management using `@Transactional`
@@ -69,9 +69,8 @@ JWT authentication and request filtering using Spring Security.
 
 ---
 
-# System Architecture Diagram
+## System Architecture Diagram
 
-```mermaid
 flowchart TD
 
 Client[API Client]
@@ -93,8 +92,8 @@ This illustrates the request flow through the application layers.
 
 ⸻
 
-Data Model
-
+##  Data Model
+```mermaid
 erDiagram
 USERS {
 uuid id PK
@@ -169,7 +168,7 @@ The authenticated user is resolved from the JWT and used to scope data access.
 
 ---
 
-### JWT Authentication Flow
+## JWT Authentication Flow
 
 sequenceDiagram
 participant Client
