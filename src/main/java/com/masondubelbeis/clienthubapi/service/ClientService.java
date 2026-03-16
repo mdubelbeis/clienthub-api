@@ -2,6 +2,7 @@ package com.masondubelbeis.clienthubapi.service;
 
 import com.masondubelbeis.clienthubapi.dto.request.ClientRequest;
 import com.masondubelbeis.clienthubapi.dto.response.ClientResponse;
+import com.masondubelbeis.clienthubapi.exception.NotFoundException;
 import com.masondubelbeis.clienthubapi.model.Client;
 import com.masondubelbeis.clienthubapi.model.User;
 import com.masondubelbeis.clienthubapi.repository.ClientRepository;
@@ -24,19 +25,33 @@ public class ClientService {
         this.userRepository = userRepository;
     }
 
-    public Page<Client> getClients(User user, Pageable pageable) {
-        return clientRepository.findByUser(user, pageable);
+    public Page<ClientResponse> getClients(Pageable pageable) {
+
+        User user = userRepository.findAll().getFirst();
+
+        return clientRepository.findByUser(user, pageable)
+                .map(client -> new ClientResponse(
+                        client.getId(),
+                        client.getName(),
+                        client.getEmail(),
+                        client.getPhone(),
+                        client.getCreatedAt()
+                ));
     }
 
     public Client getClient(UUID id) {
         return clientRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Client not found"));
+                .orElseThrow(() ->
+                        new NotFoundException("Client not found"));
     }
 
     @Transactional
     public ClientResponse createClient(ClientRequest request) {
 
-        User user = userRepository.findAll().getFirst();
+        User user = userRepository.findAll()
+                .stream()
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("No users exist in database"));
 
         Client client = new Client();
         client.setName(request.getName());

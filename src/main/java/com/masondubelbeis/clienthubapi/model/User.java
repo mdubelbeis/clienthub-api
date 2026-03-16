@@ -1,5 +1,6 @@
 package com.masondubelbeis.clienthubapi.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.time.Instant;
 import java.util.List;
@@ -22,6 +23,7 @@ public class User {
     private Instant createdAt = Instant.now();
 
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference
     private List<Client> clients;
 
     public UUID getId() {

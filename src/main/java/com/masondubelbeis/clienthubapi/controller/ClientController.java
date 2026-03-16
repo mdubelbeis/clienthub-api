@@ -19,33 +19,19 @@ import java.util.UUID;
 public class ClientController {
 
     private final ClientService clientService;
-    private final UserRepository userRepository; // ISN'T revealing the repository in controller bad practice?
 
-    public ClientController(ClientService clientService, UserRepository userRepository) {
+
+    public ClientController(ClientService clientService) {
         this.clientService = clientService;
-        this.userRepository = userRepository;
     }
 
     @GetMapping
     public Page<ClientResponse> getClients(Pageable pageable) {
-
-        // BAD PRACTICE! ONLY TEMP
-        User user = userRepository.findAll().getFirst();
-
-
-        return clientService.getClients(user, pageable)
-                .map(client -> new ClientResponse(
-                        client.getId(),
-                        client.getName(),
-                        client.getEmail(),
-                        client.getPhone(),
-                        client.getCreatedAt()
-                ));
+        return clientService.getClients(pageable);
     }
 
     @GetMapping("/{id}")
     public ClientResponse getClient(@PathVariable UUID id) {
-
         Client client = clientService.getClient(id);
 
         return new ClientResponse(
