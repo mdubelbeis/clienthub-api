@@ -170,6 +170,7 @@ The authenticated user is resolved from the JWT and used to scope data access.
 
 ## JWT Authentication Flow
 
+```mermaid
 sequenceDiagram
 participant Client
 participant API
@@ -187,13 +188,14 @@ Client->>API: Request with Authorization Bearer JWT
 API->>JwtService: validateToken
 JwtService-->>API: token valid
 API-->>Client: protected resource
-
+```
 This flow demonstrates how the API authenticates users and secures protected endpoints.
 
 ---
 
-Request Lifecycle
+## Request Lifecycle
 
+```mermaid
 sequenceDiagram
 participant Client
 participant SecurityFilter
@@ -212,6 +214,7 @@ Database-->>Repository: Results
 Repository-->>Service: Entities
 Service-->>Controller: DTO response
 Controller-->>Client: JSON response
+```
 
 This represents the internal lifecycle of an authenticated request.
 
