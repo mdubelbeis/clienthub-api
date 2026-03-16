@@ -11,7 +11,11 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "clients")
+@Table(name = "clients",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"user_id", "email"})
+        }
+)
 @Setter
 @Getter
 public class Client {
@@ -24,7 +28,7 @@ public class Client {
     @Column(name="name", nullable = false)
     private String name;
 
-    @Column(name="email", unique = true)
+    @Column(name="email")
     private String email;
 
     @Column(name="phone")
