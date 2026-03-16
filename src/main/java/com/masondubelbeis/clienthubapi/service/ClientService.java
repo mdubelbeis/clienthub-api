@@ -7,6 +7,7 @@ import com.masondubelbeis.clienthubapi.model.Client;
 import com.masondubelbeis.clienthubapi.model.User;
 import com.masondubelbeis.clienthubapi.repository.ClientRepository;
 import com.masondubelbeis.clienthubapi.repository.UserRepository;
+import com.masondubelbeis.clienthubapi.security.SecurityUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -27,47 +28,49 @@ public class ClientService {
 
     public Page<ClientResponse> getClients(Pageable pageable) {
 
-        User user = userRepository.findAll().getFirst();
+        String email = SecurityUtils.getCurrentUserEmail();
 
-        return clientRepository.findByUser(user, pageable)
-                .map(client -> new ClientResponse(
-                        client.getId(),
-                        client.getName(),
-                        client.getEmail(),
-                        client.getPhone(),
-                        client.getCreatedAt()
-                ));
+        User user = userRepository
+                .findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        return clientRepository
+                .findByUser(user, pageable)
+                .map(this::toResponse);
     }
 
-    public Client getClient(UUID id) {
-        return clientRepository.findById(id)
-                .orElseThrow(() ->
-                        new NotFoundException("Client not found"));
+    public Client getClient(UUID clientId) {
+
+        String email = SecurityUtils.getCurrentUserEmail();
+
+        User user = userRepository
+                .findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        return clientRepository
+                .findByIdAndUser(clientId, user)
+                .orElseThrow(() -> new NotFoundException("Client not found"));
     }
 
     @Transactional
     public ClientResponse createClient(ClientRequest request) {
 
-        User user = userRepository.findAll()
-                .stream()
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("No users exist in database"));
+        String email = SecurityUtils.getCurrentUserEmail();
+
+        User user = userRepository
+                .findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
         Client client = new Client();
+
         client.setName(request.getName());
         client.setEmail(request.getEmail());
         client.setPhone(request.getPhone());
         client.setUser(user);
 
-        Client saved = clientRepository.save(client);
+        clientRepository.save(client);
 
-        return new ClientResponse(
-                saved.getId(),
-                saved.getName(),
-                saved.getEmail(),
-                saved.getPhone(),
-                saved.getCreatedAt()
-        );
+        return toResponse(client);
     }
 
     @Transactional
@@ -78,5 +81,16 @@ public class ClientService {
     @Transactional
     public void deleteClient(UUID id) {
         clientRepository.deleteById(id);
+    }
+
+    private ClientResponse toResponse(Client client) {
+
+        return new ClientResponse(
+                client.getId(),
+                client.getName(),
+                client.getEmail(),
+                client.getPhone(),
+                client.getCreatedAt()
+        );
     }
 }
