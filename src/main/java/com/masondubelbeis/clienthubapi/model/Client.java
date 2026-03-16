@@ -2,39 +2,40 @@ package com.masondubelbeis.clienthubapi.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
-import lombok.Setter;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "clients",
+@Table(
+        name = "clients",
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = {"user_id", "email"})
         }
 )
-@Setter
 @Getter
+@Setter
 public class Client {
 
     @Id
     @GeneratedValue
-    @Column(name="id")
     private UUID id;
 
-    @Column(name="name", nullable = false)
+    @Column(nullable = false)
     private String name;
 
-    @Column(name="email")
+    @Column
     private String email;
 
-    @Column(name="phone")
+    @Column
     private String phone;
 
-    @Column(name="created_at")
+    @Column(nullable = false)
     private Instant createdAt = Instant.now();
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -42,6 +43,11 @@ public class Client {
     @JsonBackReference
     private User user;
 
-    @OneToMany(mappedBy = "client")
+    @OneToMany(
+            mappedBy = "client",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @JsonManagedReference
     private List<Activity> activities;
 }
