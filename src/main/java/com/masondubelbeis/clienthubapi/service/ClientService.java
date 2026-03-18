@@ -8,11 +8,13 @@ import com.masondubelbeis.clienthubapi.model.User;
 import com.masondubelbeis.clienthubapi.repository.ClientRepository;
 import com.masondubelbeis.clienthubapi.repository.UserRepository;
 import com.masondubelbeis.clienthubapi.security.SecurityUtils;
+import org.apache.coyote.BadRequestException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.util.UUID;
 
 @Service
@@ -59,20 +61,24 @@ public class ClientService {
     }
 
     @Transactional
-    public ClientResponse createClient(ClientRequest request) {
+    public ClientResponse createClient(ClientRequest request) throws BadRequestException {
 
         String email = SecurityUtils.getCurrentUserEmail();
 
         User user = userRepository
                 .findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new NotFoundException("User not found"));
+
+        if (clientRepository.existsByUserAndEmail(user, request.getEmail())) {
+            throw new BadRequestException("Client with this email already exists");
+        }
 
         Client client = new Client();
-
         client.setName(request.getName());
         client.setEmail(request.getEmail());
         client.setPhone(request.getPhone());
         client.setUser(user);
+        client.setCreatedAt(Instant.now());
 
         clientRepository.save(client);
 

@@ -8,6 +8,7 @@ import com.masondubelbeis.clienthubapi.repository.UserRepository;
 import com.masondubelbeis.clienthubapi.service.ClientService;
 
 import jakarta.validation.Valid;
+import org.apache.coyote.BadRequestException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +37,7 @@ public class ClientController {
     }
 
     @PostMapping
-    public ClientResponse createClient(@Valid @RequestBody ClientRequest request) {
+    public ClientResponse createClient(@Valid @RequestBody ClientRequest request) throws BadRequestException {
         return clientService.createClient(request);
     }
 
