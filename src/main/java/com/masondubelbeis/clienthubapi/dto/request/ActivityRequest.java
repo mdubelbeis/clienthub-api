@@ -8,6 +8,7 @@ public class ActivityRequest {
     @NotNull
     private ActivityType type;
 
+    @NotNull
     private String notes;
 
     public ActivityType getType() {
