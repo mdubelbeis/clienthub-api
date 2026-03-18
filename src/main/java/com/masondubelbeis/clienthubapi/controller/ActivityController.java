@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("api/clients/{clientId}/activities")
+@RequestMapping("/api/clients/{clientId}/activities")
 public class ActivityController {
 
     private final ActivityService activityService;
@@ -33,7 +33,7 @@ public class ActivityController {
             Pageable pageable
     ) {
 
-        Client client = clientService.getClient(clientId);
+        Client client = clientService.getClientEntity(clientId);
 
         return activityService.getActivities(client, pageable)
                 .map(activity -> new ActivityResponse(
@@ -50,7 +50,7 @@ public class ActivityController {
             @Valid @RequestBody ActivityRequest request
     ) {
 
-        Client client = clientService.getClient(clientId);
+        Client client = clientService.getClientEntity(clientId);
 
         Activity activity = new Activity();
         activity.setType(request.getType());

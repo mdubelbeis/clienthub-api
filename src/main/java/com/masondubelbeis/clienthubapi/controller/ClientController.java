@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("api/clients")
+@RequestMapping("/api/clients")
 public class ClientController {
 
     private final ClientService clientService;
@@ -32,15 +32,7 @@ public class ClientController {
 
     @GetMapping("/{id}")
     public ClientResponse getClient(@PathVariable UUID id) {
-        Client client = clientService.getClient(id);
-
-        return new ClientResponse(
-                client.getId(),
-                client.getName(),
-                client.getEmail(),
-                client.getPhone(),
-                client.getCreatedAt()
-        );
+        return clientService.getClient(id);
     }
 
     @PostMapping

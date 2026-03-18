@@ -5,12 +5,13 @@ import jakarta.validation.constraints.NotBlank;
 
 public class ClientRequest {
 
-    @NotBlank
+    @NotBlank(message="Name is required")
     private String name;
 
-    @Email
+    @Email(message="Invalid email")
     private String email;
 
+    @NotBlank(message="Phone is required")
     private String phone;
 
     public String getName() {

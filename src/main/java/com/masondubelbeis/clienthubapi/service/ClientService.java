@@ -32,20 +32,26 @@ public class ClientService {
 
         User user = userRepository
                 .findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new NotFoundException("User not found"));
 
         return clientRepository
                 .findByUser(user, pageable)
                 .map(this::toResponse);
     }
 
-    public Client getClient(UUID clientId) {
+    public ClientResponse getClient(UUID clientId) {
+        Client client = getClientEntity(clientId);
+
+        return toResponse(client);
+    }
+
+    public Client getClientEntity(UUID clientId) {
 
         String email = SecurityUtils.getCurrentUserEmail();
 
         User user = userRepository
                 .findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new NotFoundException("User not found"));
 
         return clientRepository
                 .findByIdAndUser(clientId, user)
