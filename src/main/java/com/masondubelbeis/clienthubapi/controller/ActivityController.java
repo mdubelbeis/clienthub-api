@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/clients/{clientId}/activities")
+@RequestMapping("api/clients/{clientId}/activities")
 public class ActivityController {
 
     private final ActivityService activityService;

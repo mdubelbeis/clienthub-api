@@ -25,6 +25,8 @@ public class AuthService {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
+        System.out.println(passwordEncoder.encode("admin"));
+
     }
 
     public AuthResponse login(LoginRequest request) {
