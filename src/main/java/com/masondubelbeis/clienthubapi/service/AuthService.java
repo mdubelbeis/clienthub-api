@@ -31,9 +31,10 @@ public class AuthService {
     }
 
     public AuthResponse login(LoginRequest request) {
+        String normalizedEmail = normalizeEmail(request.email());
 
         User user = userRepository
-                .findByEmail(request.email())
+                .findByEmail(normalizedEmail)
                 .orElseThrow(() ->
                         new NotFoundException("Invalid credentials")
                 );
@@ -48,19 +49,26 @@ public class AuthService {
     }
 
     public AuthResponse register(UserRegistrationRequest request) {
-        if (userRepository.existsByEmail(request.email())) {
+        String normalizedEmail = normalizeEmail(request.email());
+
+        if (userRepository.existsByEmail(normalizedEmail)) {
             throw new IllegalArgumentException("Email already in use");
         }
 
         User user = new User();
         user.setFirstName(request.firstName());
         user.setLastName(request.lastName());
-        user.setEmail(request.email());
+        user.setEmail(normalizedEmail);
         user.setPassword(passwordEncoder.encode(request.password()));
 
         User savedUser = userRepository.save(user);
 
         String  token = jwtService.generateToken(savedUser);
         return new AuthResponse(token);
+    }
+
+    private String normalizeEmail(String email) {
+        return email == null ? null : email.trim().toLowerCase();
+
     }
 }
