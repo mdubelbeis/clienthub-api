@@ -24,7 +24,8 @@ public class DataLoader implements CommandLineRunner {
         if (userRepository.count() == 0) {
 
             User user = new User();
-
+            user.setFirstName("admin");
+            user.setLastName("admin");
             user.setEmail("admin@clienthub.com");
             user.setPassword(passwordEncoder.encode("admin"));
 

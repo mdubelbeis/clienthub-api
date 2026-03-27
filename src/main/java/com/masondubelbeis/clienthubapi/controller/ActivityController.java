@@ -9,6 +9,7 @@ import com.masondubelbeis.clienthubapi.service.ActivityService;
 import com.masondubelbeis.clienthubapi.service.ClientService;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
@@ -17,15 +18,11 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/clients/{clientId}/activities")
+@RequiredArgsConstructor
 public class ActivityController {
 
     private final ActivityService activityService;
     private final ClientService clientService;
-
-    public ActivityController(ActivityService activityService, ClientService clientService) {
-        this.activityService = activityService;
-        this.clientService = clientService;
-    }
 
     @GetMapping
     public Page<ActivityResponse> getActivities(

@@ -1,6 +1,7 @@
 package com.masondubelbeis.clienthubapi.service;
 
 import com.masondubelbeis.clienthubapi.dto.request.LoginRequest;
+import com.masondubelbeis.clienthubapi.dto.request.UserRegistrationRequest;
 import com.masondubelbeis.clienthubapi.dto.response.AuthResponse;
 import com.masondubelbeis.clienthubapi.exception.NotFoundException;
 import com.masondubelbeis.clienthubapi.model.User;
@@ -41,8 +42,25 @@ public class AuthService {
             throw new NotFoundException("Invalid credentials");
         }
 
-        String token = jwtService.generateToken(user.getEmail());
+        String token = jwtService.generateToken(user);
 
+        return new AuthResponse(token);
+    }
+
+    public AuthResponse register(UserRegistrationRequest request) {
+        if (userRepository.existsByEmail(request.email())) {
+            throw new IllegalArgumentException("Email already in use");
+        }
+
+        User user = new User();
+        user.setFirstName(request.firstName());
+        user.setLastName(request.lastName());
+        user.setEmail(request.email());
+        user.setPassword(passwordEncoder.encode(request.password()));
+
+        User savedUser = userRepository.save(user);
+
+        String  token = jwtService.generateToken(savedUser);
         return new AuthResponse(token);
     }
 }

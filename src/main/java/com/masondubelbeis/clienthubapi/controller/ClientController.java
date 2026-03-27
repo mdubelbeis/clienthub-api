@@ -8,7 +8,9 @@ import com.masondubelbeis.clienthubapi.repository.UserRepository;
 import com.masondubelbeis.clienthubapi.service.ClientService;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
@@ -17,14 +19,10 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/clients")
+@RequiredArgsConstructor
 public class ClientController {
 
     private final ClientService clientService;
-
-
-    public ClientController(ClientService clientService) {
-        this.clientService = clientService;
-    }
 
     @GetMapping
     public Page<ClientResponse> getClients(Pageable pageable) {

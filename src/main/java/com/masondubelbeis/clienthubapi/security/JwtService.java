@@ -1,5 +1,6 @@
 package com.masondubelbeis.clienthubapi.security;
 
+import com.masondubelbeis.clienthubapi.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -24,12 +25,12 @@ public class JwtService {
         return Keys.hmacShaKeyFor(SECRET.getBytes());
     }
 
-    public String generateToken(String email) {
+    public String generateToken(User user) {
 
         Instant now = Instant.now();
 
         return Jwts.builder()
-                .subject(email)
+                .subject(user.getEmail())
                 .issuedAt(Date.from(now))
                 .expiration(Date.from(now.plusMillis(EXPIRATION)))
                 .signWith(getSigningKey())

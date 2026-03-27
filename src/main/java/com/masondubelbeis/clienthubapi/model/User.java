@@ -19,17 +19,37 @@ public class User {
     @GeneratedValue
     private UUID id;
 
-    @Column(nullable = false, unique = true)
-    private String email;
+    @Column(name = "first_name", nullable = false)
+    private String firstName;
+
+    @Column(name = "last_name", nullable = false)
+    private String lastName;
 
     @Column(nullable = false)
     private String password;
 
-    @Column(name="created_at")
-    private Instant createdAt = Instant.now();
+    @Column(nullable = false, unique = true)
+    private String email;
 
-    @OneToMany(mappedBy = "user")
+    @Column(name="created_at", nullable=false, updatable = false)
+    private Instant createdAt;
+
+    @Column(name="updated_at", nullable=false, updatable = true)
+    private Instant updatedAt;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Client> clients;
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = Instant.now();
+        this.updatedAt = Instant.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = Instant.now();
+    }
 
 }
