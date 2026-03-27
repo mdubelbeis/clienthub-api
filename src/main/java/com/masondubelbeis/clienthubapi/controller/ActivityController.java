@@ -2,11 +2,9 @@ package com.masondubelbeis.clienthubapi.controller;
 
 import com.masondubelbeis.clienthubapi.dto.request.ActivityRequest;
 import com.masondubelbeis.clienthubapi.dto.response.ActivityResponse;
-import com.masondubelbeis.clienthubapi.model.Activity;
 import com.masondubelbeis.clienthubapi.model.Client;
 import com.masondubelbeis.clienthubapi.service.ActivityService;
 import com.masondubelbeis.clienthubapi.service.ClientService;
-
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -28,7 +26,6 @@ public class ActivityController {
             @PathVariable UUID clientId,
             Pageable pageable
     ) {
-
         Client client = clientService.getClientEntity(clientId);
 
         return activityService.getActivities(client, pageable)
@@ -38,6 +35,7 @@ public class ActivityController {
                         activity.getNotes(),
                         activity.getCreatedAt(),
                         activity.getUpdatedAt()
+
                 ));
     }
 
@@ -46,16 +44,8 @@ public class ActivityController {
             @PathVariable UUID clientId,
             @Valid @RequestBody ActivityRequest request
     ) {
-
         Client client = clientService.getClientEntity(clientId);
-
-        Activity activity = new Activity();
-        activity.setType(request.type());
-        activity.setNotes(request.notes());
-        activity.setClient(client);
-
-        Activity saved = activityService.createActivity(request, client);
-
+        var saved = activityService.createActivity(request, client);
 
         return new ActivityResponse(
                 saved.getId(),
@@ -65,5 +55,4 @@ public class ActivityController {
                 saved.getUpdatedAt()
         );
     }
-
 }
