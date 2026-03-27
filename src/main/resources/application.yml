@@ -1,19 +1,17 @@
 spring:
-  datasource:
-    # Connect to Docker Database
-    url: jdbc:postgresql://localhost:5432/clienthub
-    username: clienthub
-    password: clienthub
+  application:
+    name: clienthub-api
 
-  jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-    hibernate:
-      # Automatically createt tables from entities
-      ddl-auto: update
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
 
 server:
-  port: 8080
+  port: ${PORT:8080}
+
+jwt:
+  secret: ${JWT_SECRET:dev-only-change-me-dev-only-change-me}
+  expiration: ${JWT_EXPIRATION:86400000}
+
+app:
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173}
