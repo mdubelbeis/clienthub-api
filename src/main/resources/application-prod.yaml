@@ -9,3 +9,12 @@ spring:
       ddl-auto: update
     open-in-view: false
     show-sql: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
