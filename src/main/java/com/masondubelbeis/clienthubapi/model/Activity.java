@@ -1,11 +1,16 @@
 package com.masondubelbeis.clienthubapi.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.Instant;
 import java.util.UUID;
 
 @Entity
 @Table(name = "activities")
+@Getter
+@Setter
 public class Activity {
 
     @Id
@@ -19,41 +24,24 @@ public class Activity {
     @Column(length = 1000)
     private String notes;
 
-    private Instant createdAt = Instant.now();
+    @Column(name="created_at", nullable = false, updatable = false)
+    private Instant createdAt;
+
+    @Column(name="updated_at", nullable = false, updatable = true)
+    private Instant updatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id", nullable = false)
     private Client client;
 
-    public UUID getId() {
-        return id;
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = Instant.now();
+        this.updatedAt = Instant.now();
     }
 
-    public ActivityType getType() {
-        return type;
-    }
-
-    public void setType(ActivityType type) {
-        this.type = type;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = Instant.now();
     }
 }

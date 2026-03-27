@@ -9,5 +9,6 @@ public record ActivityResponse(
         UUID id,
         ActivityType type,
         String notes,
-        Instant createdAt
+        Instant createdAt,
+        Instant updatedAt
 ) {}

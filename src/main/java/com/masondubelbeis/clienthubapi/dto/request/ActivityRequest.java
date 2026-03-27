@@ -1,29 +1,15 @@
 package com.masondubelbeis.clienthubapi.dto.request;
 
 import com.masondubelbeis.clienthubapi.model.ActivityType;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public class ActivityRequest {
+public record ActivityRequest(
 
-    @NotNull
-    private ActivityType type;
+        @NotNull(message = "Activity type is required")
+        ActivityType type,
 
-    @NotNull
-    private String notes;
+        @NotBlank(message = "Notes are required")
+        String notes
 
-    public ActivityType getType() {
-        return type;
-    }
-
-    public void setType(ActivityType type) {
-        this.type = type;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-}
+) {}

@@ -35,7 +35,7 @@ public class AuthService {
         User user = userRepository
                 .findByEmail(normalizedEmail)
                 .orElseThrow(() ->
-                        new NotFoundException("Invalid credentials")
+                        new NotFoundException("No username found: " + request.email())
                 );
 
         if (!passwordEncoder.matches(request.password(), user.getPassword())) {
@@ -51,7 +51,7 @@ public class AuthService {
         String normalizedEmail = normalizeEmail(request.email());
 
         if (userRepository.existsByEmail(normalizedEmail)) {
-            throw new IllegalArgumentException("Email already in use");
+                ("Email already in use");
         }
 
         User user = new User();

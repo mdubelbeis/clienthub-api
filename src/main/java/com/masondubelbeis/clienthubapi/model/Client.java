@@ -35,8 +35,11 @@ public class Client {
     @Column
     private String phone;
 
-    @Column(nullable = false)
-    private Instant createdAt = Instant.now();
+    @Column(name="created_at", nullable = false, updatable = false)
+    private Instant createdAt;
+
+    @Column(name="updated_at", nullable = false, updatable = true)
+    private Instant updatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
@@ -50,4 +53,15 @@ public class Client {
     )
     @JsonManagedReference
     private List<Activity> activities;
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = Instant.now();
+        this.updatedAt = Instant.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = Instant.now();
+    }
 }

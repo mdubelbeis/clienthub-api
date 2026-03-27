@@ -1,5 +1,6 @@
 package com.masondubelbeis.clienthubapi.service;
 
+import com.masondubelbeis.clienthubapi.dto.request.ActivityRequest;
 import com.masondubelbeis.clienthubapi.model.Activity;
 import com.masondubelbeis.clienthubapi.model.Client;
 import com.masondubelbeis.clienthubapi.repository.ActivityRepository;
@@ -20,7 +21,12 @@ public class ActivityService {
         return activityRepository.findByClient(client, pageable);
     }
 
-    public Activity createActivity(Activity activity) {
+    public Activity createActivity(ActivityRequest request, Client client) {
+        Activity activity = new Activity();
+        activity.setType(request.type());
+        activity.setNotes(request.notes());
+        activity.setClient(client);
+
         return activityRepository.save(activity);
     }
 }

@@ -53,11 +53,11 @@ public class ClientService {
 
         User user = userRepository
                 .findByEmail(email)
-                .orElseThrow(() -> new NotFoundException("User not found"));
+                .orElseThrow(() -> new NotFoundException("User not found with email: " + email));
 
         return clientRepository
                 .findByIdAndUser(clientId, user)
-                .orElseThrow(() -> new NotFoundException("Client not found"));
+                .orElseThrow(() -> new NotFoundException("Client not found with id: " + clientId));
     }
 
     @Transactional
@@ -69,16 +69,15 @@ public class ClientService {
                 .findByEmail(email)
                 .orElseThrow(() -> new NotFoundException("User not found"));
 
-        if (clientRepository.existsByUserAndEmail(user, request.getEmail())) {
+        if (clientRepository.existsByUserAndEmail(user, request.email())) {
             throw new BadRequestException("Client with this email already exists");
         }
 
         Client client = new Client();
-        client.setName(request.getName());
-        client.setEmail(request.getEmail());
-        client.setPhone(request.getPhone());
+        client.setName(request.name());
+        client.setEmail(request.email());
+        client.setPhone(request.phone());
         client.setUser(user);
-        client.setCreatedAt(Instant.now());
 
         clientRepository.save(client);
 
@@ -102,7 +101,8 @@ public class ClientService {
                 client.getName(),
                 client.getEmail(),
                 client.getPhone(),
-                client.getCreatedAt()
+                client.getCreatedAt(),
+                client.getUpdatedAt()
         );
     }
 }
