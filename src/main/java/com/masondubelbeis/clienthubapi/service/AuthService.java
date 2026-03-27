@@ -26,7 +26,6 @@ public class AuthService {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
-        System.out.println(passwordEncoder.encode("admin"));
 
     }
 
@@ -56,8 +55,8 @@ public class AuthService {
         }
 
         User user = new User();
-        user.setFirstName(request.firstName());
-        user.setLastName(request.lastName());
+        user.setFirstName(normalizeName(request.firstName()));
+        user.setLastName(normalizeName(request.lastName()));
         user.setEmail(normalizedEmail);
         user.setPassword(passwordEncoder.encode(request.password()));
 
@@ -70,5 +69,9 @@ public class AuthService {
     private String normalizeEmail(String email) {
         return email == null ? null : email.trim().toLowerCase();
 
+    }
+
+    private String normalizeName(String name) {
+        return name == null ? null : name.trim();
     }
 }
