@@ -6,7 +6,6 @@ import com.masondubelbeis.clienthubapi.dto.response.AuthResponse;
 import com.masondubelbeis.clienthubapi.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

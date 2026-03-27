@@ -2,7 +2,6 @@ package com.masondubelbeis.clienthubapi.controller;
 
 import com.masondubelbeis.clienthubapi.dto.request.ActivityRequest;
 import com.masondubelbeis.clienthubapi.dto.response.ActivityResponse;
-import com.masondubelbeis.clienthubapi.dto.response.ClientResponse;
 import com.masondubelbeis.clienthubapi.model.Activity;
 import com.masondubelbeis.clienthubapi.model.Client;
 import com.masondubelbeis.clienthubapi.service.ActivityService;
