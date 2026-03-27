@@ -36,7 +36,8 @@ public class ActivityController {
                         activity.getId(),
                         activity.getType(),
                         activity.getNotes(),
-                        activity.getCreatedAt()
+                        activity.getCreatedAt(),
+                        activity.getUpdatedAt()
                 ));
     }
 
@@ -49,17 +50,19 @@ public class ActivityController {
         Client client = clientService.getClientEntity(clientId);
 
         Activity activity = new Activity();
-        activity.setType(request.getType());
-        activity.setNotes(request.getNotes());
+        activity.setType(request.type());
+        activity.setNotes(request.notes());
         activity.setClient(client);
 
-        Activity saved = activityService.createActivity(activity);
+        Activity saved = activityService.createActivity(request, client);
+
 
         return new ActivityResponse(
                 saved.getId(),
                 saved.getType(),
                 saved.getNotes(),
-                saved.getCreatedAt()
+                saved.getCreatedAt(),
+                saved.getUpdatedAt()
         );
     }
 }
