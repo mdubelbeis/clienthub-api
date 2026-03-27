@@ -3,6 +3,7 @@ package com.masondubelbeis.clienthubapi.service;
 import com.masondubelbeis.clienthubapi.dto.request.LoginRequest;
 import com.masondubelbeis.clienthubapi.dto.request.UserRegistrationRequest;
 import com.masondubelbeis.clienthubapi.dto.response.AuthResponse;
+import com.masondubelbeis.clienthubapi.exception.BadRequestException;
 import com.masondubelbeis.clienthubapi.exception.NotFoundException;
 import com.masondubelbeis.clienthubapi.model.User;
 import com.masondubelbeis.clienthubapi.repository.UserRepository;
@@ -51,7 +52,7 @@ public class AuthService {
         String normalizedEmail = normalizeEmail(request.email());
 
         if (userRepository.existsByEmail(normalizedEmail)) {
-                ("Email already in use");
+            throw new BadRequestException("Email already in use");
         }
 
         User user = new User();
