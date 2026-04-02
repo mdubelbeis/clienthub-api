@@ -2,9 +2,6 @@ package com.masondubelbeis.clienthubapi.controller;
 
 import com.masondubelbeis.clienthubapi.dto.request.ClientRequest;
 import com.masondubelbeis.clienthubapi.dto.response.ClientResponse;
-import com.masondubelbeis.clienthubapi.model.Client;
-import com.masondubelbeis.clienthubapi.model.User;
-import com.masondubelbeis.clienthubapi.repository.UserRepository;
 import com.masondubelbeis.clienthubapi.service.ClientService;
 
 import jakarta.validation.Valid;
