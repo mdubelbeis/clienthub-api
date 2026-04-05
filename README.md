@@ -1,5 +1,7 @@
 # ClientHub API
 
+## ClientHub is under active development, with ongoing enhancements, bug tracking, and feature planning managed through GitHub Projects. ##
+
 Production-style REST API built with Spring Boot that models a client relationship management system with transactional integrity, DTO separation, relational domain modeling, and structured error handling.
 
 This project demonstrates backend architectural discipline beyond simple CRUD operations.
