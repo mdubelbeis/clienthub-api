@@ -21,6 +21,10 @@ public class Activity {
     @Column(nullable = false)
     private ActivityType type;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable=false)
+    private ActivityStatus status = ActivityStatus.OPEN;
+
     @Column(length = 1000)
     private String notes;
 
@@ -30,18 +34,31 @@ public class Activity {
     @Column(name="updated_at", nullable = false, updatable = true)
     private Instant updatedAt;
 
+    @Column
+    private Instant completedAt;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id", nullable = false)
     private Client client;
 
     @PrePersist
     public void prePersist() {
-        this.createdAt = Instant.now();
-        this.updatedAt = Instant.now();
+        Instant now = Instant.now();
+
+        if (createdAt == null) {
+            createdAt = now;
+        }
+
+        if (updatedAt == null) {
+            updatedAt = now;
+        }
+
+        if (status == null) {
+            status = ActivityStatus.OPEN;
+        }
     }
 
     @PreUpdate
     public void preUpdate() {
-        this.updatedAt = Instant.now();
-    }
-}
+        updatedAt = Instant.now();
+    }}

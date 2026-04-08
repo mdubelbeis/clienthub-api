@@ -1,8 +1,8 @@
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/clienthub
-    username: postgres
-    password: postgres
+    username: clienthub
+    password: clienthub
 
   jpa:
     hibernate:
