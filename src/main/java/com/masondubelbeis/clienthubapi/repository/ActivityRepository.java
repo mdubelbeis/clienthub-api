@@ -15,4 +15,6 @@ public interface ActivityRepository extends JpaRepository<Activity, UUID> {
 
     Optional<Activity> findByIdAndClient(UUID id, Client client);
 
+    boolean existsByClient(Client client);
+
 }

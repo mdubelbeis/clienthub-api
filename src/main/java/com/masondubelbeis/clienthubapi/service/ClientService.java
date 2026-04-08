@@ -5,6 +5,7 @@ import com.masondubelbeis.clienthubapi.dto.response.ClientResponse;
 import com.masondubelbeis.clienthubapi.exception.NotFoundException;
 import com.masondubelbeis.clienthubapi.model.Client;
 import com.masondubelbeis.clienthubapi.model.User;
+import com.masondubelbeis.clienthubapi.repository.ActivityRepository;
 import com.masondubelbeis.clienthubapi.repository.ClientRepository;
 import com.masondubelbeis.clienthubapi.repository.UserRepository;
 import com.masondubelbeis.clienthubapi.security.SecurityUtils;
@@ -22,10 +23,14 @@ public class ClientService {
 
     private final ClientRepository clientRepository;
     private final UserRepository userRepository;
+    private final ActivityService activityService;
+    private final ActivityRepository activityRepository;
 
-    public ClientService(ClientRepository clientRepository, UserRepository userRepository) {
+    public ClientService(ClientRepository clientRepository, UserRepository userRepository, ActivityService activityService, ActivityRepository activityRepository) {
         this.clientRepository = clientRepository;
         this.userRepository = userRepository;
+        this.activityService = activityService;
+        this.activityRepository = activityRepository;
     }
 
     public Page<ClientResponse> getClients(Pageable pageable) {
@@ -90,7 +95,13 @@ public class ClientService {
     }
 
     @Transactional
-    public void deleteClient(UUID id) {
+    public void deleteClient(UUID id) throws BadRequestException {
+        Client existingClient = getClientEntity(id);
+
+        if (activityRepository.existsByClient(existingClient)) {
+            throw new BadRequestException("Cannot delete a client with existing activities.");
+        }
+
         clientRepository.deleteById(id);
     }
 

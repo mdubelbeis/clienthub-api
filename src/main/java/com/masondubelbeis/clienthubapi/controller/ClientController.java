@@ -36,7 +36,7 @@ public class ClientController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteClient(@PathVariable UUID id) {
+    public void deleteClient(@PathVariable UUID id) throws BadRequestException {
         clientService.deleteClient(id);
     }
 }
