@@ -363,10 +363,13 @@ GET /clients?page=0&size=20
 Example response structure:
 ```json
 {
-  "content": [],
-  "pageable": {},
-  "totalElements": 0,
-  "totalPages": 0
+	"content": [],
+	"page": {
+		"size": 20,
+		"number": 0,
+		"totalElements": 1,
+		"totalPages": 1
+	}
 }
 ```
 
