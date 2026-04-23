@@ -90,8 +90,25 @@ public class ClientService {
     }
 
     @Transactional
-    public Client updateClient(Client client) {
-        return clientRepository.save(client);
+    public ClientResponse updateClient(UUID id, ClientRequest request) throws BadRequestException {
+        Client existingClient = getClientEntity(id);
+
+        String normalizedEmail = request.email() == null ? null : request.email().trim().toLowerCase();
+
+        if (normalizedEmail != null && !normalizedEmail.equalsIgnoreCase(existingClient.getEmail())) {
+            boolean emailExists = clientRepository.existsByUserAndEmail(existingClient.getUser(), normalizedEmail);
+            if (emailExists) {
+                throw new BadRequestException("Client with this email already exists");
+            }
+        }
+
+        existingClient.setName(request.name());
+        existingClient.setEmail(normalizedEmail);
+        existingClient.setPhone(request.phone());
+
+        Client updatedClient = clientRepository.save(existingClient);
+
+        return toResponse(updatedClient);
     }
 
     @Transactional

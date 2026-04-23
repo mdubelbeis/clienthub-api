@@ -39,4 +39,12 @@ public class ClientController {
     public void deleteClient(@PathVariable UUID id) throws BadRequestException {
         clientService.deleteClient(id);
     }
+
+    @PutMapping("/{id}")
+    public ClientResponse updateClient(
+            @PathVariable UUID id,
+            @Valid @RequestBody ClientRequest request
+    ) throws BadRequestException {
+        return clientService.updateClient(id, request);
+    }
 }
