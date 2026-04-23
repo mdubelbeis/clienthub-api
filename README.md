@@ -1,36 +1,55 @@
 # ClientHub API
 
-## ClientHub is under active development, with ongoing enhancements, bug tracking, and feature planning managed through GitHub Projects. ##
+Production-style REST API for **ClientHub**, a full-stack CRM application that enables authenticated users to manage clients, track relationship activity, and generate searchable reports in a secure, user-scoped system.
 
-Production-style REST API built with Spring Boot that models a client relationship management system with transactional integrity, DTO separation, relational domain modeling, and structured error handling.
+This project was built to demonstrate backend engineering practices beyond basic CRUD, including layered architecture, DTO separation, transactional service boundaries, JWT authentication, ownership enforcement, structured validation, and extensible reporting.
 
-This project demonstrates backend architectural discipline beyond simple CRUD operations.
+## Project Status
+
+ClientHub is a deployed portfolio project and remains under active improvement as features, validation, usability, and documentation continue to evolve.
+
+## Related Repositories
+
+- **Frontend:** [ClientHub Frontend](https://github.com/mdubelbeis/clienthub-frontend)
+- **Backend:** [ClientHub API](https://github.com/mdubelbeis/clienthub-api)
+
+## Live Demo
+- **Live Demo:** https://clienthub-frontend-sigma.vercel.app/login
+- **Swagger / OpenAPI Docs:** https://clienthub-api.onrender.com/swagger-ui/index.html
 
 ---
 
-# Overview
+## Overview
 
-The system manages:
+ClientHub models a simple but realistic CRM workflow where authenticated users manage their own client relationships and maintain a timeline of activities tied to each client.
 
-- Users
-- Clients
-- Client Activities
+The system supports:
 
-It models a typical CRM workflow where authenticated users manage their own client relationships and track interactions.
+- user authentication with JWT
+- client creation, update, deletion, and retrieval
+- activity creation, editing, and completion tracking
+- searchable client and activity reporting
+- user-scoped access control to protect tenant data
 
-Business rules enforced by the application include:
+This API was designed to reflect production-minded backend structure rather than a single-layer demo application.
 
-- Each client belongs to exactly one user
-- Activities must be associated with an existing client
-- Users can only access their own clients
-- Activities are always attached to a client context
-- Authentication is enforced via JWT tokens
+---
 
-All rules are implemented inside transactional service boundaries.
+## Core Features
+
+- **JWT authentication** for stateless API security
+- **User-scoped data ownership** so users can only access their own clients and activities
+- **Client management** with create, update, delete, and detail retrieval
+- **Activity tracking** with status updates and client-linked history
+- **Searchable reporting module** for client and activity reports
+- **Structured validation** for request data
+- **Centralized exception handling** for consistent JSON error responses
+- **Paginated endpoints** for scalable retrieval patterns
 
 ---
 
 ## Tech Stack
+
 - Java 21
 - Spring Boot
 - Spring Web MVC
@@ -38,233 +57,148 @@ All rules are implemented inside transactional service boundaries.
 - Spring Security
 - Hibernate
 - PostgreSQL
+- JWT
+- Lombok
 - Docker
 - OpenAPI / Swagger
-- Lombok
-- JWT
 
 ---
 
 ## What This Project Demonstrates
-- Understanding of layered backend architecture
-- Relational domain modeling
-- Transactional service boundaries
-- Secure authentication with JWT
-- Multi-tenant ownership enforcement
-- Clean API contract design with DTO separation
-- Centralized error handling
-- Containerized development environments
 
----
+This project showcases:
 
-## Why This Project Exists
-
-The goal of ClientHub is to demonstrate the design and implementation of a production-style backend system rather than a simple CRUD demo.
-
-The project emphasizes:
-- layered architecture
+- layered backend architecture
 - relational domain modeling
-- secure authentication
-- ownership enforcement
-- maintainable API design
-- reproducible local environments
+- DTO-based API contract design
+- transactional business logic
+- stateless authentication with JWT
+- secure ownership enforcement
+- centralized error handling
+- extensible service design for future growth
+- containerized local development
 
 ---
 
-# Architecture
+## Architecture
 
-This application follows a layered backend architecture.
+ClientHub API follows a layered backend architecture designed for maintainability, security, and clear separation of concerns.
 
 ### Controller Layer
-Thin REST endpoints responsible only for HTTP concerns.
+Handles HTTP request/response concerns and delegates business operations to services.
 
 ### Service Layer
-Business rules, ownership validation, and transaction boundaries.
+Contains business logic, validation, ownership checks, reporting logic, and transaction boundaries.
 
 ### Repository Layer
-Spring Data JPA persistence abstraction.
+Provides persistence access through Spring Data JPA repositories.
 
 ### Domain Layer
-Relational modeling with explicit entity relationships.
+Defines the core entities and their relationships: users, clients, and activities.
 
 ### DTO Layer
-Prevents entity leakage and defines stable API contracts.
+Separates API contracts from persistence models and prevents direct entity exposure.
 
 ### Exception Layer
-Centralized JSON error handling via `@ControllerAdvice`.
+Centralizes error handling and standardizes JSON error responses.
 
 ### Security Layer
-JWT authentication and request filtering using Spring Security.
+Implements JWT authentication, request filtering, and authenticated user resolution.
 
 ---
 
 ## Architectural Highlights
 
-- JWT authentication with stateless security
-- Service-level transaction management using `@Transactional`
-- Ownership enforcement between Users → Clients → Activities
-- DTO-based API contracts to prevent entity exposure
-- Explicit relational modeling with foreign keys
-- Pagination support for scalable data retrieval
-- Centralized error handling for consistent API responses
-- Dockerized PostgreSQL for reproducible local development
-- OpenAPI documentation via Swagger
+- JWT-based stateless authentication
+- service-layer transaction management with `@Transactional`
+- user ownership enforcement between `User -> Client -> Activity`
+- DTO separation for stable request and response contracts
+- paginated resource retrieval
+- global exception handling
+- reporting module built with inheritance and polymorphism
+- Dockerized PostgreSQL for reproducible local setup
 
 ---
 
-## System Architecture Diagram
-```mermaid
-flowchart TD
+## Reporting Module
 
-Client[API Client]
+One of the key architectural additions in ClientHub is the reporting module.
 
-SecurityFilter[JWT Security Filter]
+The reporting system supports:
+- **Client Summary Report**
+- **Activity Report**
 
-Controller[Controller Layer]
-Service[Service Layer]
-Repository[Repository Layer]
-Database[(PostgreSQL)]
+Each report returns:
+- a report title
+- a generated timestamp
+- multiple columns
+- multiple rows
+- optional search filtering
 
-Client --> SecurityFilter
-SecurityFilter --> Controller
-Controller --> Service
-Service --> Repository
-Repository --> Database
-```
+The reporting module was intentionally designed using object-oriented principles:
 
-This illustrates the request flow through the application layers.
+- **Inheritance** through a shared abstract report generator
+- **Polymorphism** through multiple report generator implementations selected through a common contract
+- **Encapsulation** through service-layer orchestration and DTO-based responses
 
-⸻
+This allows additional report types to be added later without changing controller logic.
 
-##  Data Model
+---
+
+## Data Model
+
 ```mermaid
 erDiagram
-USERS {
-uuid id PK
-varchar email "unique"
-varchar password
-timestamp created_at
-}
+    USERS {
+        uuid id PK
+        varchar email
+        varchar password
+        timestamp created_at
+    }
 
-CLIENTS {
-uuid id PK
-uuid user_id FK
-varchar name
-varchar email
-varchar phone
-timestamp created_at
-}
+    CLIENTS {
+        uuid id PK
+        uuid user_id FK
+        varchar name
+        varchar email
+        varchar phone
+        timestamp created_at
+        timestamp updated_at
+    }
 
-ACTIVITIES {
-uuid id PK
-uuid client_id FK
-varchar type
-text notes
-timestamp created_at
-}
+    ACTIVITIES {
+        uuid id PK
+        uuid client_id FK
+        varchar type
+        varchar status
+        text notes
+        timestamp created_at
+        timestamp updated_at
+        timestamp completed_at
+    }
 
-USERS ||--o{ CLIENTS : owns
-CLIENTS ||--o{ ACTIVITIES : contains
+    USERS ||--o{ CLIENTS : owns
+    CLIENTS ||--o{ ACTIVITIES : contains
+
+	flowchart TD
+    Client[API Consumer]
+    Security[JWT Authentication Filter]
+    Controller[Controller Layer]
+    Service[Service Layer]
+    Repository[Repository Layer]
+    Database[(PostgreSQL)]
+
+    Client --> Security
+    Security --> Controller
+    Controller --> Service
+    Service --> Repository
+    Repository --> Database
 ```
-
-Relationships enforce ownership boundaries:
-
-User
-  └── Clients
-        └── Activities
-
-This ensures users can only interact with data they own.
-
 ---
 
 ## Authentication
 
 Authentication is implemented using JWT tokens.
-
-Login
-
-```http request
-POST /auth/login
-```
-
-Example request:
-```json
-{
-  "email": "admin@clienthub.com",
-  "password": "password"
-}
-```
-
-Example response:
-```json
-{
-  "token": "JWT_TOKEN"
-}
-```
-
-Authenticated requests must include the token:
-
-```jwt
-Authorization: Bearer JWT_TOKEN
-```
-
-The authenticated user is resolved from the JWT and used to scope data access.
-
----
-
-## JWT Authentication Flow
-
-```mermaid
-sequenceDiagram
-participant Client
-participant API
-participant AuthService
-participant JwtService
-
-Client->>API: POST /auth/login
-API->>AuthService: authenticate(email,password)
-AuthService->>JwtService: generateToken(user)
-JwtService-->>AuthService: JWT
-AuthService-->>API: JWT token
-API-->>Client: return token
-
-Client->>API: Request with Authorization Bearer JWT
-API->>JwtService: validateToken
-JwtService-->>API: token valid
-API-->>Client: protected resource
-```
-This flow demonstrates how the API authenticates users and secures protected endpoints.
-
----
-
-## Request Lifecycle
-
-```mermaid
-sequenceDiagram
-participant Client
-participant SecurityFilter
-participant Controller
-participant Service
-participant Repository
-participant Database
-
-Client->>SecurityFilter: HTTP Request
-SecurityFilter->>SecurityFilter: Validate JWT
-SecurityFilter->>Controller: Forward authenticated request
-Controller->>Service: Execute business logic
-Service->>Repository: Query / Persist entities
-Repository->>Database: SQL operations
-Database-->>Repository: Results
-Repository-->>Service: Entities
-Service-->>Controller: DTO response
-Controller-->>Client: JSON response
-```
-
-This represents the internal lifecycle of an authenticated request.
-
----
-
-## Key Endpoints
 
 ### Login
 
@@ -272,213 +206,193 @@ This represents the internal lifecycle of an authenticated request.
 POST /auth/login
 ```
 
----
-
-### Create Client
-
+Example request:
 ```http request
-POST /clients
+{
+  "email": "user@example.com",
+  "password": "password"
+}
 ```
 
----
-
-### List Clients
-
-```http request
-GET /clients
-```
-
-Returns only clients owned by the authenticated user.
-
----
-
-### Get Client
-
-```http request
-GET /clients/{clientId}
-```
-
-Ownership validation ensures users cannot access another user’s clients.
-
----
-
-### Delete Client
-
-```http request
-DELETE /clients/{clientId}
-```
-
----
-
-### Create Activity
-
-```http request
-POST /activities
-```
-
-Creates an activity attached to a client.
-
----
-
-### List Activities
-
-```http request
-GET /activities
-```
-
----
-
-### Example Client Response
+Example response:
 
 ```json
 {
-  "id": "6b0b0c75-3f6d-4f3c-8b39-33f5d40b4f21",
-  "name": "John Doe",
-  "email": "john@email.com",
-  "phone": "555-1234",
-  "createdAt": "2026-03-15T22:55:21Z"
+  "token": "JWT_TOKEN"
+}
+```
+The authenticated user is resolved from the token and used to scope all client and activity access.
+
+## Example Endpoints
+
+### Auth
+
+```http request
+POST /auth/login
+POST /auth/register
+```
+
+### Clients
+```http request
+GET    /api/clients
+GET    /api/clients/{id}
+POST   /api/clients
+PUT    /api/clients/{id}
+DELETE /api/clients/{id}
+```
+
+### Activities
+```http request
+GET    /api/clients/{clientId}/activities
+POST   /api/clients/{clientId}/activities
+PUT    /api/activities/{id}
+PATCH  /api/activities/{id}/status
+```
+
+### Reports
+```http request
+POST /reports
+```
+Example report request:
+
+```json
+{
+  "reportType": "activities",
+  "searchTerm": "open"
 }
 ```
 
 ---
 
-## Error Handling
+## Example Client Response
+```json
+{
+  "id": "6b0b0c75-3f6d-4f3c-8b39-33f5d40b4f21",
+  "name": "John Doe",
+  "email": "john@email.com",
+  "phone": "512-905-1530",
+  "createdAt": "2026-03-15T22:55:21Z",
+  "updatedAt": "2026-03-15T22:55:21Z"
+}
+```
 
-Standardized error format:
+---
+
+## Validation and Error Handling
+
+ClientHub uses structured request validation and centralized exception handling to produce consistent API responses.
+
+Examples include:
+* required field validation
+* duplicate client email prevention per authenticated user
+* phone formatting/validation
+* unsupported report type handling
+* protected ownership checks for user data
+
+Example error response:
+
 ```json
 {
   "timestamp": "2026-03-15T22:55:21Z",
   "status": 404,
   "error": "Not Found",
   "message": "Client not found",
-  "path": "/clients/123"
+  "path": "/api/clients/123"
 }
 ```
-
-Business exceptions are translated via global exception handling.
 
 ---
 
 ## Pagination
 
-Client listing endpoints support pagination.
+Collection endpoints use paginated responses for scalability.
 
-Example:
 ```http request
-GET /clients?page=0&size=20
+GET /api/clients?page=0&size=20
 ```
 
-Example response structure:
+Example response:
 ```json
 {
-	"content": [],
-	"page": {
-		"size": 20,
-		"number": 0,
-		"totalElements": 1,
-		"totalPages": 1
-	}
+  "content": [],
+  "page": {
+    "size": 20,
+    "number": 0,
+    "totalElements": 1,
+    "totalPages": 1
+  }
 }
 ```
 
 ---
 
-### Running the Application
+## Local Development
 
-Start PostgreSQL:
+1. Start PostgreSQL
+
 ```bash
 docker compose up -d
 ```
 
-### Run the API:
+2. Run the API
 ```bash
 ./mvnw spring-boot:run
 ```
 
-Application will start at:
+3. Access the application
 
-http://localhost:8080
+* API: http://localhost:8080
+* Swagger UI: http://localhost:8080/swagger-ui.html
 
-API documentation available at:
-
-http://localhost:8080/swagger-ui.html
-
----
+--- 
 
 ## Design Decisions
 
 ### DTO Separation
+Entities are not exposed directly through the API. Request and response DTOs define stable API contracts and prevent persistence concerns from leaking into the API layer.
 
-Entities are not exposed directly through the API.
-Instead, request and response DTOs define the API contract.
+### Service-Layer Transactions
 
-Reasons:
-	•	Prevents accidental entity exposure
-	•	Allows API evolution independent of persistence models
-	•	Avoids lazy-loading serialization problems
-	•	Provides clear boundaries between persistence and API layers
-
-Example:
-
-Client Entity → ClientResponse DTO
-
-
----
-
-### Service Layer Transactions
-
-Business logic is contained inside service classes and annotated with @Transactional.
-
-Reasons:
-	•	Guarantees atomic operations for multi-step database interactions
-	•	Centralizes business rules outside of controllers
-	•	Prevents partial writes during failures
-	•	Provides a clean separation between HTTP and domain logic
-
----
+Business logic lives inside service classes and uses transaction boundaries for consistency and atomicity.
 
 ### Ownership Enforcement
 
-Clients are scoped to authenticated users.
-
-Rather than trusting client-provided identifiers, the application resolves the authenticated user from the SecurityContext and enforces ownership checks at the service layer.
-
-This prevents:
-	•	Cross-user data access
-	•	IDOR (Insecure Direct Object Reference) vulnerabilities
-
----
+All client and activity operations are scoped to the authenticated user to prevent cross-user data access.
 
 ### Stateless Authentication
 
-Authentication uses JWT tokens rather than session-based authentication.
+JWT-based authentication avoids server-side sessions and supports scalable API design.
 
-Reasons:
-	•	Enables horizontal scalability
-	•	Removes server-side session storage
-	•	Allows stateless API deployments
-	•	Simplifies integration with frontend clients
+### Extensible Reporting Design
 
----
-
-### Pagination by Default
-
-Collection endpoints return paginated results using Spring Data Pageable.
-
-Reasons:
-	•	Prevents large dataset responses
-	•	Allows efficient database querying
-	•	Supports scalable API consumption
+The reports module uses a shared abstraction so that new report types can be added without rewriting endpoint orchestration.
 
 ---
 
 ## Future Enhancements
-- Integration tests with Testcontainers
-- User registration endpoint
-- Role-based authorization
-- Nested activity endpoints (/clients/{id}/activities)
-- API filtering and search 
-- CI/CD pipeline integration
-- Observability (logging and metrics)
+
+* unit and integration test expansion
+* advanced report filters
+* CSV export for reports
+* richer activity analytics
+* role-based authorization
+* CI/CD pipeline automation
+* observability and metrics
+* improved frontend/admin UX integrations
 
 ---
+
+## Why This Project Matters
+
+ClientHub was built to show the kind of structure expected in a real backend application:
+
+* not just CRUD endpoints
+* but authentication
+* ownership enforcement
+* validation
+* layered design
+* extensibility
+* maintainability
+* and production-minded API contracts
+
+It represents the kind of backend work involved in building secure, scalable full-stack business applications.
