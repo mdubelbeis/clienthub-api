@@ -81,7 +81,7 @@ public class ClientService {
         Client client = new Client();
         client.setName(request.name());
         client.setEmail(request.email());
-        client.setPhone(request.phone());
+        client.setPhone(normalizePhone(request.phone()));
         client.setUser(user);
 
         clientRepository.save(client);
@@ -104,7 +104,7 @@ public class ClientService {
 
         existingClient.setName(request.name());
         existingClient.setEmail(normalizedEmail);
-        existingClient.setPhone(request.phone());
+        existingClient.setPhone(normalizePhone(request.phone()));
 
         Client updatedClient = clientRepository.save(existingClient);
 
@@ -132,5 +132,21 @@ public class ClientService {
                 client.getCreatedAt(),
                 client.getUpdatedAt()
         );
+    }
+
+    private String normalizePhone(String phone) throws BadRequestException {
+        if (phone == null || phone.isBlank()) {
+            return null;
+        }
+
+        String digitsOnly = phone.replaceAll("\\D", "");
+
+        if (digitsOnly.length() != 10) {
+            throw new BadRequestException("Phone number must contain exactly 10 digits.");
+        }
+
+        return digitsOnly.substring(0, 3) + "-"
+                + digitsOnly.substring(3, 6) + "-"
+                + digitsOnly.substring(6);
     }
 }
