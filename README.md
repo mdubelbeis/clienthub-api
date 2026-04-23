@@ -179,8 +179,10 @@ erDiagram
 
     USERS ||--o{ CLIENTS : owns
     CLIENTS ||--o{ ACTIVITIES : contains
+```
 
-	flowchart TD
+```mermaid
+flowchart TD
     Client[API Consumer]
     Security[JWT Authentication Filter]
     Controller[Controller Layer]
@@ -188,12 +190,13 @@ erDiagram
     Repository[Repository Layer]
     Database[(PostgreSQL)]
 
-    Client --> Security
-    Security --> Controller
-    Controller --> Service
-    Service --> Repository
-    Repository --> Database
+Client --> Security
+Security --> Controller
+Controller --> Service
+Service --> Repository
+Repository --> Database
 ```
+
 ---
 
 ## Authentication
