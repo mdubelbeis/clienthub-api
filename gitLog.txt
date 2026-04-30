@@ -1,387 +1,79 @@
-commit 6f988feb6cfa121bd19ca291fd0c7f1852d6aa36
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Mon Apr 20 20:13:17 2026 -0500
-
-    docs: fixed README
-
-commit 124da9668d3e21435f23560f06c17b380557a1e9
-Merge: 2eefb44 9fc6ffc
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Mon Apr 20 18:10:03 2026 -0500
-
-    init: from github to gitlab
-
-commit 2eefb445194f635efb0a7389dda4446c444df591
-Merge: 855d980 2fc47f2
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Wed Apr 8 14:12:51 2026 -0500
-
-    Merge pull request #16 from mdubelbeis/bug/create-client-form
-    
-    bug: return structured validation errors from backend
-
-commit 2fc47f25453b02666fb98e2d1cd93aa639a9e21e
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Wed Apr 8 14:09:33 2026 -0500
-
-    bug: return structured validation errors from backend
-
-commit 855d9804b35402fc47614ea4f969a82abfbbda16
-Merge: a541470 f331482
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Wed Apr 8 13:42:51 2026 -0500
-
-    Merge pull request #14 from mdubelbeis/feat/delete-client
-    
-    feat: delete Client
-
-commit f331482e20606c4ebe24f6e20899825e80b84368
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Wed Apr 8 13:40:45 2026 -0500
-
-    feat: delete Client
-
-commit a541470f9b7e84fc74229a8f32e99aacbd319f0c
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Wed Apr 8 12:29:35 2026 -0500
-
-    docs: updated README
-
-commit 721527d6a0a4afa3877d9ff9a18b63d55db95b9a
-Merge: bb14ad0 daf5918
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Wed Apr 8 11:28:35 2026 -0500
-
-    Merge pull request #11 from mdubelbeis/feat/update-client-task
-    
-    feat: add updated/complete to clients task
-
-commit daf5918a7accc4ce2d3ba1bf9bd9fc801ece0646
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Wed Apr 8 11:17:07 2026 -0500
-
-    feat: add updated/complete to clients task
-
-commit bb14ad08438001c83f6e3f4f6386d8e35851bba0
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Sun Apr 5 12:04:16 2026 -0500
-
-    docs: updated README
-
-commit 71370cb80c1f0f96f5e1766077367e804d6e9af1
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Thu Apr 2 16:44:16 2026 -0500
-
-    clean: clear unused imports
-
-commit 382c19d464915ebdfebcf45e9201827c4e816c0b
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Fri Mar 27 17:26:00 2026 -0500
-
-    fix: missing field
-
-commit 6b759194fd1e90f4dd0dd6ace9c4bf7595e4e220
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Fri Mar 27 16:50:18 2026 -0500
-
-    fix: add getUpdatedAt
-
-commit 1cf450b2c778ee2e9f724713d784693b01e5d026
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Fri Mar 27 16:49:47 2026 -0500
-
-    fix: add getUpdatedAt
-
-commit 17a10b5af4de52df4ce1b2dbd2a98eccb9f9dfa5
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Fri Mar 27 16:42:21 2026 -0500
-
-    feat: add BadRequestException
-
-commit f4a603556f9cec156cd0247764ecb236a942de1c
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Fri Mar 27 16:36:45 2026 -0500
-
-    feat: add updatedAt and @PrePersist @PreUpdate
-
-commit 7c2ee7f25d4cc5a04f243617c0d91d040233f91e
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Fri Mar 27 15:51:04 2026 -0500
-
-    fix: add normalization for user inputs
-
-commit 36986422f65436288a42fc2077d6833c4f81ed94
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Fri Mar 27 15:50:50 2026 -0500
-
-    fix: add normalization for user inputs
-
-commit 54d96a2866dfa55bf697d5df54d5ecb6549a100d
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Fri Mar 27 14:00:40 2026 -0500
-
-    fix: removed all unused import
-
-commit 783f9f009c8ec09aded0a12544dd5e45e547c662
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Fri Mar 27 12:34:12 2026 -0500
-
-    Add endpoint for user registration
-
-commit 7316d889ad4a0e2da938c67034bffca1f4347a3c
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Fri Mar 27 11:32:10 2026 -0500
-
-    Add endpoint for health check
-
-commit bcebafff20e47b666c1643d0a9f9aaea6132ff59
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Fri Mar 27 11:05:04 2026 -0500
-
-    Add Activator for health check endpoint
-
-commit 555343e7a9cca0693c51d7a1b5ebfe767de0b37b
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Fri Mar 27 11:00:29 2026 -0500
-
-    add Dockerfile for Render deployment
-
-commit e7ad64c1657fdb4aa025a0ddb40acc396b9c8f0d
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Fri Mar 27 09:17:23 2026 -0500
-
-    configure profile-based environment settings for deployment
-
-commit 3f24c35fb520479fa8f06fa1843adc9f73678d0f
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Fri Mar 27 09:12:25 2026 -0500
-
-    prepare security and cors config for deployment
-
-commit f9ae624b0024b05ae9457f3b6f1c3ec10f9ab72d
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Wed Mar 18 16:05:03 2026 -0500
-
-    feat: add exception handling on duplicate clients
-
-commit 474ed3a8abb753049c5e1675df235f94df888556
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Wed Mar 18 15:55:45 2026 -0500
-
-    feat: add validation to notes
-
-commit 0c532286dbd67f67ad1a818d60920fc9d0a8713b
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Wed Mar 18 15:53:26 2026 -0500
-
-    feat: added validation to DTOs
-
-commit ebbdaeffc89b9c02333cd0a2a0839a2151dae8c5
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Wed Mar 18 15:28:02 2026 -0500
-
-    feat: admin fallback if all users deleted
-
-commit 1357d9d9dce21d761150a44de924cfb2bfec75ea
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Wed Mar 18 13:55:06 2026 -0500
-
-    feat: add CORS configuration and updated routes to /api prefix
-
-commit a73bf73259f230aec0580cc364606a042e9a32ce
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Mon Mar 16 13:59:48 2026 -0500
-
-    docs/refactor: rearrange sections
-
-commit 043fe3a65d906105919658af346d0923eae7aa6f
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Mon Mar 16 13:56:19 2026 -0500
-
-    docs/refactor: add mermaid to Request Lifecycle and JWT Authentication Flow sections
-
-commit 066a07dc2b732142b0a16d6210721490e62d7311
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Mon Mar 16 13:53:02 2026 -0500
-
-    docs/refactor: correct markdown formatting
-
-commit be8562698d1f9f92c732273b3637065f916c5854
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Mon Mar 16 13:47:02 2026 -0500
-
-    docs: updated README - current project status
-
-commit 314bf3fbe84359ca1c47c34972be1dace9ca05f2
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Mon Mar 16 13:13:48 2026 -0500
-
-    feat(security): scope clients to authenticated user
-
-commit 197d074074002c2ad31777111f5f7b62ac73a3f6
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Mon Mar 16 12:48:08 2026 -0500
-
-    refactor: add cascade to activities when client deletion
-
-commit ffc5071c9fc61f92d06c2543772ba9d29305cba1
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Mon Mar 16 12:46:04 2026 -0500
-
-    refactor: removed inline email constraint anad defined it at table level
-
-commit e8b94dbb71e70a2f58ee5b1eada3f09e177c770d
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Mon Mar 16 12:41:47 2026 -0500
-
-    feat: add authentication jwt filter before requests
-
-commit b7ee929f2adc2b3c71e0669a409858a67cc4da8a
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Mon Mar 16 12:27:42 2026 -0500
-
-    feat: add /login endpoint and return JWT token for user login
-
-commit f951ca1dd7647a54ea615d737e51e5a88bd93d44
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Mon Mar 16 01:10:21 2026 -0500
-
-    refactor: Add @Getter/@Setter annotations on entities to lean up class
-
-commit ca0ef79f57afa4ad292737b2bf670b173e0196a9
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Mon Mar 16 00:41:42 2026 -0500
-
-    refactor: Removed 5th parameters in ActivityResponse instantiation
-
-commit 0271ae016f9411f304a162014251c6f6e9193f4b
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Mon Mar 16 00:32:32 2026 -0500
-
-    refactor: ActivityResponse and ClientResponse refactored to implement as record type
-
-commit 7ea155c6c15954297b627a712244a18871999468
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Mon Mar 16 00:28:23 2026 -0500
-
-    refactor: ErrorResponse refactored to record type
-
-commit 05a2a0ab86d9e6d08e95c3fb1f4c616f99c48447
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Mon Mar 16 00:25:50 2026 -0500
-
-    refactor: clean up bug
-
-commit 8b37dfe49a4b97273e452c2832240ecd5476f176
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Mon Mar 16 00:24:59 2026 -0500
-
-    feat: add and implement Global Exception Handling
-
-commit 4a944264e0f7d1450db1fec2fcb5676cb860f8a5
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Sun Mar 15 23:23:14 2026 -0500
-
-    docs: add comprehensive README describing architecture and API
-
-commit e337951d5a6acca9d51f60a955598d0b2af91803
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Sun Mar 15 23:08:13 2026 -0500
-
-    refactor: moved temporary business logic in ClientController to ClientService
-
-commit 27a62c27241709b4cc40c1cfb01676c9fe1e37ff
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Sun Mar 15 22:41:35 2026 -0500
-
-    feat: Add ClientController and ActivityController with DTO mapping and pagination
-
-commit 0a93bf113c1eeb1c511d179895763d8a1121fd2d
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Sun Mar 15 22:32:29 2026 -0500
-
-    feat: add DTO layer for Client and Activity requests/responses
-
-commit 04747c41670943c5673bdbec8b2b5891b35883c9
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Sun Mar 15 22:27:32 2026 -0500
-
-    feat: add service layer for Client and Activity business logic
-
-commit bca41a3b8e305fd6ad888d7b234525882e9f99b0
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Sun Mar 15 21:09:27 2026 -0500
-
-    add repository for User, Client, and Activity
-
-commit 1cd051b491a48a1a026c46b657b40cbe40df55fe
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Sun Mar 15 14:20:43 2026 -0500
-
-    Add ActivityType enum
-
-commit 0bc880d8bb36bcd966fb949eddabf8523259e56d
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Sun Mar 15 14:18:07 2026 -0500
-
-    Add Activity entity with enum activity types and Client relationship
-
-commit b1fecc9d1922effc8ba83121cc88806f515b33b4
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Sun Mar 15 14:15:40 2026 -0500
-
-    Add Client entity with ManyToOne relationship with User
-
-commit 2ee304f86dbb05eae53b7cfa0eaacf51f8b1547e
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Sun Mar 15 14:14:05 2026 -0500
-
-    Add User entity with UUID primary key and user-client relationship
-
-commit da7411323d1a003bd78cc159b534d2ea66a59376
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Sun Mar 15 14:10:23 2026 -0500
-
-    config: dockerized db connection
-
-commit 6ec50ed85be4e4cb2025b33e7778bd851b9782a5
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Sun Mar 15 13:15:59 2026 -0500
-
-    feat: add dockerized postgres database
-
-commit bed08a9597eda376bc8c633e63a3d6e7e5897cb7
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Sun Mar 15 12:05:04 2026 -0500
-
-    init: altered application.properties to application.yml
-
-commit 7b60346fa950610c5e386adef25d8f983f2db9d6
-Author: Mason Jeffrey Dubelbeis <Mason.Dubelbeis@gmail.com>
-Date:   Sun Mar 15 11:32:31 2026 -0500
-
-    init: project init
-
-commit 9fc6ffc41125bf066f7232b04d25e70e3dbb67ad
-Author: Emilio Miller <emilio.miller@siriusfederal.com>
-Date:   Wed Jul 17 02:48:21 2024 +0000
-
-    Corrected mispelling
-
-commit 808c354cd35e0a9c47841b13f6d2916a8950fcf9
-Author: Zohar Sajith <zohar.sajith@cdw.com>
-Date:   Mon Feb 27 18:18:19 2023 +0000
-
-    Added Branching instructions to README
-
-commit 5c6cab3370d38263505cb408a3c47ced40e9211e
-Author: Zohar Sajith <zohar.sajith@cdw.com>
-Date:   Mon Feb 13 15:45:36 2023 +0000
-
-    Added WGU Template README.md
-
-commit 835201f0562fa7fd2a47c06be1742da2ba56f12c
-Author: Zohar Sajith <zohar.sajith@cdw.com>
-Date:   Mon Feb 13 15:42:43 2023 +0000
-
-    Initial commit
+* 5f46c25 (HEAD -> main) docs: added zipped source code file
+* b12c771 (origin/main, gitlab/main, gitlab/HEAD) test: add unit test
+* b4e6428 docs: update README
+* 868ec49 docs: update README
+* f2021c7 fix: add swagger-ui matcher
+* 208ff2e fix: implemented better client phone validation
+* 5a5d27d (origin/feat/edit-client, gitlab/feat/edit-client, feat/edit-client) feat: add client edit functionality
+* 1a0b94a (origin/feat/reports, gitlab/feat/reports, feat/reports) feat: add reports module
+* f68269a (list) docs: add gitlog
+* 6f988fe docs: fixed README
+*   124da96 init: from github to gitlab
+|\  
+| * 9fc6ffc Corrected mispelling
+| * 808c354 Added Branching instructions to README
+| * 5c6cab3 Added WGU Template README.md
+| * 835201f Initial commit
+*   2eefb44 Merge pull request #16 from mdubelbeis/bug/create-client-form
+|\  
+| * 2fc47f2 (origin/bug/create-client-form, bug/create-client-form) bug: return structured validation errors from backend
+|/  
+*   855d980 Merge pull request #14 from mdubelbeis/feat/delete-client
+|\  
+| * f331482 (origin/feat/delete-client, feat/delete-client) feat: delete Client
+|/  
+* a541470 docs: updated README
+*   721527d Merge pull request #11 from mdubelbeis/feat/update-client-task
+|\  
+| * daf5918 (origin/feat/update-client-task, feat/update-client-task) feat: add updated/complete to clients task
+|/  
+* bb14ad0 docs: updated README
+* 71370cb clean: clear unused imports
+* 382c19d fix: missing field
+* 6b75919 fix: add getUpdatedAt
+* 1cf450b fix: add getUpdatedAt
+* 17a10b5 feat: add BadRequestException
+* f4a6035 feat: add updatedAt and @PrePersist @PreUpdate
+* 7c2ee7f (origin/bug/normalize-inputs, bug/normalize-inputs) fix: add normalization for user inputs
+* 3698642 fix: add normalization for user inputs
+* 54d96a2 (origin/feat/user-registration, feat/user-registration) fix: removed all unused import
+* 783f9f0 Add endpoint for user registration
+* 7316d88 Add endpoint for health check
+* bcebaff Add Activator for health check endpoint
+* 555343e add Dockerfile for Render deployment
+* e7ad64c configure profile-based environment settings for deployment
+* 3f24c35 prepare security and cors config for deployment
+* f9ae624 feat: add exception handling on duplicate clients
+* 474ed3a feat: add validation to notes
+* 0c53228 feat: added validation to DTOs
+* ebbdaef feat: admin fallback if all users deleted
+* 1357d9d feat: add CORS configuration and updated routes to /api prefix
+* a73bf73 docs/refactor: rearrange sections
+* 043fe3a docs/refactor: add mermaid to Request Lifecycle and JWT Authentication Flow sections
+* 066a07d docs/refactor: correct markdown formatting
+* be85626 docs: updated README - current project status
+* 314bf3f feat(security): scope clients to authenticated user
+* 197d074 refactor: add cascade to activities when client deletion
+* ffc5071 refactor: removed inline email constraint anad defined it at table level
+* e8b94db feat: add authentication jwt filter before requests
+* b7ee929 feat: add /login endpoint and return JWT token for user login
+* f951ca1 refactor: Add @Getter/@Setter annotations on entities to lean up class
+* ca0ef79 refactor: Removed 5th parameters in ActivityResponse instantiation
+* 0271ae0 refactor: ActivityResponse and ClientResponse refactored to implement as record type
+* 7ea155c refactor: ErrorResponse refactored to record type
+* 05a2a0a refactor: clean up bug
+* 8b37dfe feat: add and implement Global Exception Handling
+* 4a94426 docs: add comprehensive README describing architecture and API
+* e337951 refactor: moved temporary business logic in ClientController to ClientService
+* 27a62c2 feat: Add ClientController and ActivityController with DTO mapping and pagination
+* 0a93bf1 feat: add DTO layer for Client and Activity requests/responses
+* 04747c4 feat: add service layer for Client and Activity business logic
+* bca41a3 add repository for User, Client, and Activity
+* 1cd051b Add ActivityType enum
+* 0bc880d Add Activity entity with enum activity types and Client relationship
+* b1fecc9 Add Client entity with ManyToOne relationship with User
+* 2ee304f Add User entity with UUID primary key and user-client relationship
+* da74113 config: dockerized db connection
+* 6ec50ed feat: add dockerized postgres database
+* bed08a9 init: altered application.properties to application.yml
+* 7b60346 init: project init
