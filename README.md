@@ -1,242 +1,118 @@
 # ClientHub API
 
-Production-style REST API for **ClientHub**, a full-stack CRM application that enables authenticated users to manage clients, track relationship activity, and generate searchable reports in a secure, user-scoped system.
+Production-style REST API for **ClientHub**, a full-stack CRM application that allows authenticated users to manage clients, track relationship activity, view dashboard metrics, and generate searchable reports in a secure, user-scoped system.
 
-This project was built to demonstrate backend engineering practices beyond basic CRUD, including layered architecture, DTO separation, transactional service boundaries, JWT authentication, ownership enforcement, structured validation, and extensible reporting.
-
-## Project Status
-
-ClientHub is a deployed portfolio project and remains under active improvement as features, validation, usability, and documentation continue to evolve.
-
-## Related Repositories
-
-- **Frontend:** [ClientHub Frontend](https://github.com/mdubelbeis/clienthub-frontend)
-- **Backend:** [ClientHub API](https://github.com/mdubelbeis/clienthub-api)
-
-## Live Demo
-- **Live Demo:** https://clienthub-frontend-sigma.vercel.app/login
-- **Swagger / OpenAPI Docs:** https://clienthub-api.onrender.com/swagger-ui/index.html
+The goal of this project is to demonstrate backend engineering practices beyond basic CRUD, including layered architecture, DTO separation, JWT authentication, ownership enforcement, transactional service logic, validation, centralized exception handling, reporting, dashboard aggregation, and production deployment.
 
 ---
 
-## Overview
+## Live Demo
 
-ClientHub models a simple but realistic CRM workflow where authenticated users manage their own client relationships and maintain a timeline of activities tied to each client.
+- Frontend: https://clienthub-frontend-sigma.vercel.app/login
+- Backend API: https://clienthub-api.onrender.com
+- Swagger / OpenAPI: https://clienthub-api.onrender.com/swagger-ui/index.html
 
-The system supports:
+### Demo Account
 
-- user authentication with JWT
-- client creation, update, deletion, and retrieval
-- activity creation, editing, and completion tracking
-- searchable client and activity reporting
-- user-scoped access control to protect tenant data
+```text
+Email: demo@clienthub.com
+Password: DemoPassword123!
+```
+---
 
-This API was designed to reflect production-minded backend structure rather than a single-layer demo application.
+## Tech Stack
+
+* Java 21
+* Spring Boot
+* Spring Web MVC
+* Spring Security
+* Spring Data JPA
+* Hibernate
+* PostgreSQL
+* JWT
+* Docker
+* OpenAPI / Swagger
+* Render
 
 ---
 
 ## Core Features
 
-- **JWT authentication** for stateless API security
-- **User-scoped data ownership** so users can only access their own clients and activities
-- **Client management** with create, update, delete, and detail retrieval
-- **Activity tracking** with status updates and client-linked history
-- **Searchable reporting module** for client and activity reports
-- **Structured validation** for request data
-- **Centralized exception handling** for consistent JSON error responses
-- **Paginated endpoints** for scalable retrieval patterns
+* JWT-based registration and login
+* User-scoped client data
+* Client CRUD operations
+* Client activity tracking
+* Activity completion workflow
+* Dashboard summary metrics
+* Recent activity display
+* Searchable client and activity reports
+* Request validation
+* Centralized JSON error handling
+* Paginated client retrieval
+* Demo data seeding through a Spring seed profile
 
 ---
 
-## Tech Stack
+Architecture
 
-- Java 21
-- Spring Boot
-- Spring Web MVC
-- Spring Data JPA
-- Spring Security
-- Hibernate
-- PostgreSQL
-- JWT
-- Lombok
-- Docker
-- OpenAPI / Swagger
+ClientHub follows a layered backend architecture:
 
----
+```text
+Controller Layer
+   ↓
+Service Layer
+   ↓
+Repository Layer
+   ↓
+PostgreSQL
+```
 
-## What This Project Demonstrates
+### Key Design Points
 
-This project showcases:
-
-- layered backend architecture
-- relational domain modeling
-- DTO-based API contract design
-- transactional business logic
-- stateless authentication with JWT
-- secure ownership enforcement
-- centralized error handling
-- extensible service design for future growth
-- containerized local development
-
----
-
-## Architecture
-
-ClientHub API follows a layered backend architecture designed for maintainability, security, and clear separation of concerns.
-
-### Controller Layer
-Handles HTTP request/response concerns and delegates business operations to services.
-
-### Service Layer
-Contains business logic, validation, ownership checks, reporting logic, and transaction boundaries.
-
-### Repository Layer
-Provides persistence access through Spring Data JPA repositories.
-
-### Domain Layer
-Defines the core entities and their relationships: users, clients, and activities.
-
-### DTO Layer
-Separates API contracts from persistence models and prevents direct entity exposure.
-
-### Exception Layer
-Centralizes error handling and standardizes JSON error responses.
-
-### Security Layer
-Implements JWT authentication, request filtering, and authenticated user resolution.
-
----
-
-## Architectural Highlights
-
-- JWT-based stateless authentication
-- service-layer transaction management with `@Transactional`
-- user ownership enforcement between `User -> Client -> Activity`
-- DTO separation for stable request and response contracts
-- paginated resource retrieval
-- global exception handling
-- reporting module built with inheritance and polymorphism
-- Dockerized PostgreSQL for reproducible local setup
-
----
-
-## Reporting Module
-
-One of the key architectural additions in ClientHub is the reporting module.
-
-The reporting system supports:
-- **Client Summary Report**
-- **Activity Report**
-
-Each report returns:
-- a report title
-- a generated timestamp
-- multiple columns
-- multiple rows
-- optional search filtering
-
-The reporting module was intentionally designed using object-oriented principles:
-
-- **Inheritance** through a shared abstract report generator
-- **Polymorphism** through multiple report generator implementations selected through a common contract
-- **Encapsulation** through service-layer orchestration and DTO-based responses
-
-This allows additional report types to be added later without changing controller logic.
+* Controllers handle HTTP concerns.
+* Services contain business logic, ownership checks, validation, and transaction boundaries.
+* Repositories use Spring Data JPA for persistence.
+* DTOs separate API contracts from JPA entities.
+* JWT authentication resolves the current user and scopes access to that user’s data.
+* Reports are generated through an extensible report generator design.
+* Dashboard metrics are computed server-side from authenticated user-owned data.
 
 ---
 
 ## Data Model
 
-```mermaid
-erDiagram
-    USERS {
-        uuid id PK
-        varchar email
-        varchar password
-        timestamp created_at
-    }
-
-    CLIENTS {
-        uuid id PK
-        uuid user_id FK
-        varchar name
-        varchar email
-        varchar phone
-        timestamp created_at
-        timestamp updated_at
-    }
-
-    ACTIVITIES {
-        uuid id PK
-        uuid client_id FK
-        varchar type
-        varchar status
-        text notes
-        timestamp created_at
-        timestamp updated_at
-        timestamp completed_at
-    }
-
-    USERS ||--o{ CLIENTS : owns
-    CLIENTS ||--o{ ACTIVITIES : contains
+```text
+User
+ └── Client
+      └── Activity
 ```
 
-```mermaid
-flowchart TD
-    Client[API Consumer]
-    Security[JWT Authentication Filter]
-    Controller[Controller Layer]
-    Service[Service Layer]
-    Repository[Repository Layer]
-    Database[(PostgreSQL)]
-
-Client --> Security
-Security --> Controller
-Controller --> Service
-Service --> Repository
-Repository --> Database
-```
+* A user can own many clients.
+* A client belongs to exactly one user.
+* A client can have many activities.
+* Activities track type, status, notes, timestamps, and completion time.
+* A unique constraint prevents duplicate client emails per user.
 
 ---
 
-## Authentication
-
-Authentication is implemented using JWT tokens.
-
-### Login
-
-```http request
-POST /auth/login
-```
-
-Example request:
-```http request
-{
-  "email": "user@example.com",
-  "password": "password"
-}
-```
-
-Example response:
-
-```json
-{
-  "token": "JWT_TOKEN"
-}
-```
-The authenticated user is resolved from the token and used to scope all client and activity access.
-
-## Example Endpoints
+## Main Endpoints
 
 ### Auth
 
-```http request
-POST /auth/login
+```text
 POST /auth/register
+POST /auth/login
+```
+
+### Dashboard
+
+```text
+GET /api/dashboard/summary
 ```
 
 ### Clients
-```http request
+
+```text
 GET    /api/clients
 GET    /api/clients/{id}
 POST   /api/clients
@@ -245,7 +121,8 @@ DELETE /api/clients/{id}
 ```
 
 ### Activities
-```http request
+
+```text
 GET    /api/clients/{clientId}/activities
 POST   /api/clients/{clientId}/activities
 PUT    /api/activities/{id}
@@ -253,77 +130,42 @@ PATCH  /api/activities/{id}/status
 ```
 
 ### Reports
-```http request
-POST /reports
-```
-Example report request:
 
-```json
-{
-  "reportType": "activities",
-  "searchTerm": "open"
-}
+```text
+POST /api/reports
 ```
 
 ---
 
-## Example Client Response
-```json
-{
-  "id": "6b0b0c75-3f6d-4f3c-8b39-33f5d40b4f21",
-  "name": "John Doe",
-  "email": "john@email.com",
-  "phone": "512-905-1530",
-  "createdAt": "2026-03-15T22:55:21Z",
-  "updatedAt": "2026-03-15T22:55:21Z"
-}
-```
+## Dashboard Summary
 
----
+The dashboard endpoint returns real user-scoped metrics:
 
-## Validation and Error Handling
-
-ClientHub uses structured request validation and centralized exception handling to produce consistent API responses.
-
-Examples include:
-* required field validation
-* duplicate client email prevention per authenticated user
-* phone formatting/validation
-* unsupported report type handling
-* protected ownership checks for user data
-
-Example error response:
-
-```json
-{
-  "timestamp": "2026-03-15T22:55:21Z",
-  "status": 404,
-  "error": "Not Found",
-  "message": "Client not found",
-  "path": "/api/clients/123"
-}
-```
-
----
-
-## Pagination
-
-Collection endpoints use paginated responses for scalability.
-
-```http request
-GET /api/clients?page=0&size=20
-```
+* total clients
+* total activities
+* open activities
+* completed activities
+* recent activities
 
 Example response:
+
 ```json
 {
-  "content": [],
-  "page": {
-    "size": 20,
-    "number": 0,
-    "totalElements": 1,
-    "totalPages": 1
-  }
+  "totalClients": 8,
+  "totalActivities": 16,
+  "openActivities": 8,
+  "completedActivities": 8,
+  "recentActivities": [
+    {
+      "id": "7f0c6b35-8f8d-4a3c-bc41-569c9d1b430a",
+      "clientId": "92a15a86-3be4-4e8c-a9ff-20d69e1f08e7",
+      "clientName": "Austin Roofing Co.",
+      "type": "EMAIL",
+      "status": "OPEN",
+      "notes": "Send follow-up summary and pricing information.",
+      "createdAt": "2026-05-06T19:39:00Z"
+    }
+  ]
 }
 ```
 
@@ -331,71 +173,116 @@ Example response:
 
 ## Local Development
 
-1. Start PostgreSQL
+Start PostgreSQL:
 
 ```bash
 docker compose up -d
 ```
 
-2. Run the API
+Run the API:
+
 ```bash
 ./mvnw spring-boot:run
 ```
 
-3. Access the application
+Run with demo seed data:
+```text
+SPRING_PROFILES_ACTIVE=dev,seed ./mvnw spring-boot:run
+```
 
-* API: http://localhost:8080
-* Swagger UI: http://localhost:8080/swagger-ui.html
+Local URLs:
+```text
+API: http://localhost:8080
+Swagger: http://localhost:8080/swagger-ui/index.html
+```
 
---- 
+---
+
+## Spring Profiles
+
+ClientHub uses Spring profiles for environment-specific behavior.
+
+```text
+dev   - local development
+prod  - production deployment
+seed  - optional demo data seeding
+```
+
+Production normally runs with:
+
+```text
+SPRING_PROFILES_ACTIVE=prod
+```
+
+Demo seeding can be run temporarily with:
+
+```text
+SPRING_PROFILES_ACTIVE=prod,seed
+```
+
+After seeding, the app should be returned to:
+
+```text
+SPRING_PROFILES_ACTIVE=prod
+```
+
+---
+
+## Production Environment Variables
+
+```text
+SPRING_PROFILES_ACTIVE=prod
+SPRING_DATASOURCE_URL=jdbc:postgresql://...
+SPRING_DATASOURCE_USERNAME=...
+SPRING_DATASOURCE_PASSWORD=...
+JWT_SECRET=<production-secret>
+JWT_EXPIRATION=86400000
+CORS_ALLOWED_ORIGINS=https://clienthub-frontend-sigma.vercel.app
+```
+
+---
 
 ## Design Decisions
 
-### DTO Separation
+#### DTO Separation
+
 Entities are not exposed directly through the API. Request and response DTOs define stable API contracts and prevent persistence concerns from leaking into the API layer.
 
-### Service-Layer Transactions
+#### Service-Layer Business Logic
 
-Business logic lives inside service classes and uses transaction boundaries for consistency and atomicity.
+Business logic lives inside service classes rather than controllers. This keeps controllers thin and centralizes validation, ownership checks, report generation, dashboard aggregation, and transaction boundaries.
 
-### Ownership Enforcement
+#### Ownership Enforcement
 
-All client and activity operations are scoped to the authenticated user to prevent cross-user data access.
+Client and activity operations are scoped to the authenticated user so one user cannot access or modify another user’s CRM data.
 
-### Stateless Authentication
+#### Stateless Authentication
 
-JWT-based authentication avoids server-side sessions and supports scalable API design.
+JWT-based authentication avoids server-side sessions and supports a stateless API design.
 
-### Extensible Reporting Design
+#### Dashboard Aggregation
 
-The reports module uses a shared abstraction so that new report types can be added without rewriting endpoint orchestration.
+Dashboard metrics are calculated server-side from authenticated user-owned data instead of being hardcoded on the frontend.
+
+#### Profile-Based Demo Seeding
+
+Demo data is seeded through a dedicated Spring seed profile instead of running automatically during normal production startup.
 
 ---
 
 ## Future Enhancements
 
-* unit and integration test expansion
-* advanced report filters
+* Expanded unit and integration testing
+* Testcontainers for database-backed tests
 * CSV export for reports
-* richer activity analytics
-* role-based authorization
+* Activity due dates and follow-up reminders
+* Advanced dashboard analytics
+* Flyway or Liquibase database migrations
 * CI/CD pipeline automation
-* observability and metrics
-* improved frontend/admin UX integrations
 
 ---
 
-## Why This Project Matters
+## Project Purpose
 
-ClientHub was built to show the kind of structure expected in a real backend application:
+ClientHub was built to demonstrate the backend structure used in real business applications: authentication, authorization, user-owned data, validation, reporting, dashboard aggregation, deployment configuration, and maintainable API contracts.
 
-* not just CRUD endpoints
-* but authentication
-* ownership enforcement
-* validation
-* layered design
-* extensibility
-* maintainability
-* and production-minded API contracts
-
-It represents the kind of backend work involved in building secure, scalable full-stack business applications.
