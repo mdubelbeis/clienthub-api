@@ -1,7 +1,9 @@
 package com.masondubelbeis.clienthubapi.repository;
 
 import com.masondubelbeis.clienthubapi.model.Activity;
+import com.masondubelbeis.clienthubapi.model.ActivityStatus;
 import com.masondubelbeis.clienthubapi.model.Client;
+import com.masondubelbeis.clienthubapi.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,5 +17,8 @@ public interface ActivityRepository extends JpaRepository<Activity, UUID> {
     Optional<Activity> findByIdAndClient(UUID id, Client client);
     boolean existsByClient(Client client);
     List<Activity> findByClientUserId(UUID userId);
+    long countByClientUser(User user);
+    long countByClientUserAndStatus(User user, ActivityStatus status);
+    List<Activity> findTop5ByClientUserOrderByCreatedAtDesc(User user);
 
 }
