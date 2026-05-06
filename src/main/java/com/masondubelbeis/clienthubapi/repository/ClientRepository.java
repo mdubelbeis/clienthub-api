@@ -10,10 +10,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface ClientRepository extends JpaRepository<Client, UUID> {
-
+    long countByUser(User user);
     Page<Client> findByUser(User user, Pageable pageable);
-
     Optional<Client> findByIdAndUser(UUID id, User user);
-
     boolean existsByUserAndEmail(User user, String email);
 }
