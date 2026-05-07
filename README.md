@@ -53,7 +53,7 @@ Password: DemoPassword123!
 
 ---
 
-Architecture
+## Architecture
 
 ClientHub follows a layered backend architecture:
 
@@ -79,7 +79,7 @@ PostgreSQL
 
 ---
 
-## Data Model
+### Data Model
 
 ```text
 User
@@ -92,6 +92,26 @@ User
 * A client can have many activities.
 * Activities track type, status, notes, timestamps, and completion time.
 * A unique constraint prevents duplicate client emails per user.
+
+### Logging
+
+ClientHub uses Spring Boot logging with SLF4J to improve local debugging and production visibility.
+
+Logging is configured by Spring profile:
+
+- `dev` uses more detailed application logging for local development.
+- `prod` uses cleaner application-level logs for deployed environments.
+
+The backend logs important service-layer events such as:
+
+- authentication success/failure
+- client create/update/delete workflows
+- activity create/update/status changes
+- dashboard summary generation
+- report generation
+- demo data seeding
+
+Sensitive values are intentionally not logged, including passwords, JWT tokens, authorization headers, full request bodies, activity notes, and report search terms.
 
 ---
 
