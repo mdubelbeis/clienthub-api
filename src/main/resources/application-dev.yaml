@@ -12,3 +12,8 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+logging:
+  level:
+    com.masondubelbeis.clienthubapi: DEBUG
+    org.springframework.security: INFO

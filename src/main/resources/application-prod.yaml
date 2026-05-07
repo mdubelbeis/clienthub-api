@@ -21,3 +21,8 @@ management:
   endpoint:
     health:
       show-details: never
+
+logging:
+  level:
+    com.masondubelbeis.clienthubapi: INFO
+    org.springframework.security: WARN
