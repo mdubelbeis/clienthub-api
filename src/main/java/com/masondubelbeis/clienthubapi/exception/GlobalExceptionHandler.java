@@ -3,6 +3,8 @@ package com.masondubelbeis.clienthubapi.exception;
 import com.masondubelbeis.clienthubapi.dto.response.ValidationErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -15,12 +17,20 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ErrorResponse> handleNotFound(
             NotFoundException ex,
             HttpServletRequest request
     ) {
+        log.warn(
+                "Request failed with not found. method={}, path={}, message={}",
+                request.getMethod(),
+                request.getRequestURI(),
+                ex.getMessage()
+        );
+
         ErrorResponse error = new ErrorResponse(
                 Instant.now(),
                 404,
@@ -37,6 +47,13 @@ public class GlobalExceptionHandler {
             BadRequestException ex,
             HttpServletRequest request
     ) {
+        log.warn(
+                "Request failed with bad request. method={}, path={}, message={}",
+                request.getMethod(),
+                request.getRequestURI(),
+                ex.getMessage()
+        );
+
         ErrorResponse error = new ErrorResponse(
                 Instant.now(),
                 400,
@@ -59,6 +76,13 @@ public class GlobalExceptionHandler {
             errors.put(fieldError.getField(), fieldError.getDefaultMessage());
         });
 
+        log.warn(
+                "Request validation failed. method={}, path={}, fieldCount={}",
+                request.getMethod(),
+                request.getRequestURI(),
+                errors.size()
+        );
+
         ValidationErrorResponse error = new ValidationErrorResponse(
                 Instant.now(),
                 400,
@@ -76,6 +100,13 @@ public class GlobalExceptionHandler {
             ConstraintViolationException ex,
             HttpServletRequest request
     ) {
+        log.warn(
+                "Request constraint validation failed. method={}, path={}, message={}",
+                request.getMethod(),
+                request.getRequestURI(),
+                ex.getMessage()
+        );
+
         ErrorResponse error = new ErrorResponse(
                 Instant.now(),
                 400,
@@ -92,11 +123,18 @@ public class GlobalExceptionHandler {
             Exception ex,
             HttpServletRequest request
     ) {
+        log.error(
+                "Unexpected server error. method={}, path={}",
+                request.getMethod(),
+                request.getRequestURI(),
+                ex
+        );
+
         ErrorResponse error = new ErrorResponse(
                 Instant.now(),
                 500,
                 "Internal Server Error",
-                ex.getMessage(),
+                "An unexpected error occurred.",
                 request.getRequestURI()
         );
 
