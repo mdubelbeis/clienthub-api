@@ -18,6 +18,9 @@ The goal of this project is to demonstrate backend engineering practices beyond 
 Email: demo@clienthub.com
 Password: DemoPassword123!
 ```
+
+* Demo data seeding through a Spring `seed` profile
+
 ---
 
 ## Tech Stack
@@ -79,7 +82,7 @@ PostgreSQL
 
 ---
 
-### Data Model
+## Data Model
 
 ```text
 User
@@ -93,7 +96,9 @@ User
 * Activities track type, status, notes, timestamps, and completion time.
 * A unique constraint prevents duplicate client emails per user.
 
-### Logging
+---
+
+## Logging
 
 ClientHub uses Spring Boot logging with SLF4J to improve local debugging and production visibility.
 
@@ -119,20 +124,20 @@ Sensitive values are intentionally not logged, including passwords, JWT tokens, 
 
 ### Auth
 
-```text
+```http
 POST /auth/register
 POST /auth/login
 ```
 
 ### Dashboard
 
-```text
+```http
 GET /api/dashboard/summary
 ```
 
 ### Clients
 
-```text
+```http
 GET    /api/clients
 GET    /api/clients/{id}
 POST   /api/clients
@@ -142,7 +147,7 @@ DELETE /api/clients/{id}
 
 ### Activities
 
-```text
+```http
 GET    /api/clients/{clientId}/activities
 POST   /api/clients/{clientId}/activities
 PUT    /api/activities/{id}
@@ -151,7 +156,7 @@ PATCH  /api/activities/{id}/status
 
 ### Reports
 
-```text
+```http
 POST /api/reports
 ```
 
